@@ -6,22 +6,25 @@
   <title>Java basics: Beginner tutor</title>
   <style>
     :root {
-      --bg: #0f1419;
-      --surface: #1a2332;
-      --surface2: #243044;
-      --border: #3d4d66;
-      --text: #e8eef6;
-      --muted: #b6c2d4;
-      --accent: #3b9eff;
-      --accent-dim: #1e5a94;
+      --bg: #0b0d10;
+      --surface: #14181d;
+      --surface2: #1c2229;
+      --border: #2e3844;
+      --text: #f4f0e6;
+      --muted: #a8b0bb;
+      --accent: #e7c49a;
+      --brass: #e4c093;
+      --brass-2: #efd0aa;
+      --ink: #1a140e;
       --green: #3dd68c;
       --green-dim: #145c38;
       --orange: #f5a524;
       --red: #f07178;
-      --code-bg: #0d1117;
-      --radius: 8px;
-      --font: system-ui, "Segoe UI", sans-serif;
-      --mono: ui-monospace, "Cascadia Code", "Consolas", monospace;
+      --code-bg: #0c1014;
+      --radius: 10px;
+      --font: "Avenir Next", "Segoe UI", system-ui, sans-serif;
+      --display: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+      --mono: ui-monospace, "SF Mono", "Cascadia Code", Consolas, monospace;
       --space-1: 4px;
       --space-2: 8px;
       --space-3: 12px;
@@ -29,6 +32,18 @@
       --space-5: 24px;
       --space-6: 32px;
       --space-7: 48px;
+      --i-list: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='M4 7h16M4 12h16M4 17h10'/%3E%3C/svg%3E");
+      --i-x: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='M6 6l12 12M18 6L6 18'/%3E%3C/svg%3E");
+      --i-left: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M14 6l-6 6 6 6'/%3E%3C/svg%3E");
+      --i-right: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M10 6l6 6-6 6'/%3E%3C/svg%3E");
+      --i-home: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 11l8-7 8 7v9H4z'/%3E%3Cpath d='M10 20v-6h4v6'/%3E%3C/svg%3E");
+      --i-check: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12.5l4.2 4.2L19 7'/%3E%3C/svg%3E");
+      --i-braces: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='M9 6c-2 1.2-3 2.8-3 6s1 4.8 3 6M15 6c2 1.2 3 2.8 3 6s-1 4.8-3 6'/%3E%3C/svg%3E");
+      --i-bulb: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M9 18h6M10 21h4'/%3E%3Cpath d='M8 14a5 5 0 116 0c-.7.6-1 1.3-1 2H11c0-.7-.3-1.4-1-2z'/%3E%3C/svg%3E");
+      --i-alert: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 4l8 14H4z'/%3E%3Cpath d='M12 10v4M12 16.5v.5'/%3E%3C/svg%3E");
+      --i-mark: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M7 4h10v16l-5-3-5 3z'/%3E%3C/svg%3E");
+      --i-info: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round'%3E%3Ccircle cx='12' cy='12' r='8'/%3E%3Cpath d='M12 11v5M12 8v.5'/%3E%3C/svg%3E");
+      --i-star: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linejoin='round'%3E%3Cpath d='M12 3.5l2.2 4.6 5 .7-3.6 3.5.9 5L12 15.2 7.5 17.3l.9-5L4.8 8.8l5-.7z'/%3E%3C/svg%3E");
     }
 
     *, *::before, *::after { box-sizing: border-box; }
@@ -37,12 +52,16 @@
 
     body {
       margin: 0;
-      background: var(--bg);
-      color: #d5deea;
+      background:
+        radial-gradient(900px 420px at 80% -8%, #1b1914 0%, transparent 60%),
+        var(--bg);
+      color: #d9d3c7;
       font-family: var(--font);
       font-size: 1.05rem;
-      line-height: 1.55;
+      line-height: 1.6;
     }
+
+    ::selection { background: var(--brass); color: var(--ink); }
 
     .skip {
       position: absolute;
@@ -74,10 +93,39 @@
 
     .sidebar-bar { display: block; }
 
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+    }
+
+    .logo-mark {
+      width: 2.25rem;
+      height: 2.25rem;
+      flex: 0 0 auto;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--surface2);
+    }
+
+    .logo-mark::before {
+      content: "";
+      width: 1.15rem;
+      height: 1.15rem;
+      background: var(--accent);
+      -webkit-mask: var(--i-braces) center / contain no-repeat;
+      mask: var(--i-braces) center / contain no-repeat;
+    }
+
     .logo strong {
       display: block;
       color: var(--text);
-      font-size: 1.25rem;
+      font-family: var(--display);
+      font-size: 1.35rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
     }
 
     .logo-sub {
@@ -86,8 +134,22 @@
     }
 
     .home-link {
-      display: inline-block;
-      margin-top: var(--space-3);
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      margin-top: var(--space-4);
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.92rem;
+    }
+
+    .home-link::before {
+      content: "";
+      width: 0.95rem;
+      height: 0.95rem;
+      background: currentColor;
+      -webkit-mask: var(--i-home) center / contain no-repeat;
+      mask: var(--i-home) center / contain no-repeat;
     }
 
     .home-link:hover { color: var(--text); }
@@ -100,13 +162,13 @@
     }
 
     .progress-bar {
-      height: var(--space-2);
+      height: var(--space-1);
       background: var(--surface2);
       border-radius: var(--radius);
     }
 
     .progress-fill {
-      height: var(--space-2);
+      height: var(--space-1);
       width: 0;
       background: var(--accent);
       border-radius: var(--radius);
@@ -114,13 +176,21 @@
 
     .menu-toggle { display: none; }
 
+    .nav-links { counter-reset: lesson; }
+
     .nav-section {
       color: var(--muted);
-      margin: var(--space-4) 0 var(--space-2);
+      margin: var(--space-5) 0 var(--space-2);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
     }
 
     .nav-btn {
-      display: block;
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
       width: 100%;
       text-align: left;
       background: transparent;
@@ -130,11 +200,32 @@
       padding: var(--space-2) var(--space-3);
       font: inherit;
       cursor: pointer;
+      counter-increment: lesson;
+    }
+
+    .nav-btn::before {
+      content: counter(lesson, decimal-leading-zero);
+      flex: 0 0 auto;
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.04em;
+      color: var(--accent);
     }
 
     .nav-btn:hover { background: var(--surface2); color: var(--text); }
 
-    .nav-btn.active { background: var(--accent-dim); color: var(--text); }
+    .nav-btn.active { background: var(--surface2); color: var(--text); }
+
+    .nav-btn.done::after {
+      content: "";
+      width: 0.85rem;
+      height: 0.85rem;
+      margin-left: auto;
+      flex: 0 0 auto;
+      background: var(--green);
+      -webkit-mask: var(--i-check) center / contain no-repeat;
+      mask: var(--i-check) center / contain no-repeat;
+    }
 
     .main {
       width: min(920px, 100%);
@@ -147,22 +238,36 @@
     .panel.active { display: block; }
 
     h1 {
-      font-size: 1.85rem;
-      font-weight: 700;
+      font-family: var(--display);
+      font-size: 2.6rem;
+      font-weight: 600;
+      letter-spacing: -0.03em;
       color: var(--text);
-      margin: 0 0 var(--space-3);
-      line-height: 1.2;
+      margin: 0 0 var(--space-4);
+      line-height: 1.12;
+    }
+
+    h1::after {
+      content: "";
+      display: block;
+      width: 3rem;
+      height: 1px;
+      margin-top: var(--space-4);
+      background: var(--accent);
     }
 
     h2 {
-      font-size: 1.35rem;
+      font-family: var(--display);
+      font-size: 1.7rem;
       font-weight: 600;
+      letter-spacing: -0.02em;
       color: var(--text);
-      margin: var(--space-6) 0 var(--space-3);
+      margin: var(--space-7) 0 var(--space-3);
     }
 
     h3 {
-      font-size: 1.1rem;
+      font-family: var(--display);
+      font-size: 1.2rem;
       font-weight: 600;
       color: var(--text);
       margin: 0 0 var(--space-3);
@@ -202,11 +307,11 @@
       margin: 0 0 var(--space-4);
     }
 
-    pre .kw { color: #d2a8ff; }
-    pre .str { color: #7ee0b0; }
-    pre .num { color: #f5a524; }
-    pre .cm { color: #9aa8bc; font-style: italic; }
-    pre .fn { color: #79c0ff; }
+    pre .kw { color: #e7c49a; }
+    pre .str { color: #9ddeb8; }
+    pre .num { color: #f0c36a; }
+    pre .cm { color: #8b97a6; font-style: italic; }
+    pre .fn { color: #9ec1ff; }
 
     .card, .playground {
       background: var(--surface);
@@ -314,21 +419,23 @@
     }
 
     .btn {
-      background: var(--accent-dim);
-      color: var(--text);
+      background: var(--brass);
+      color: var(--ink);
       border: 0;
       padding: var(--space-2) var(--space-4);
+      font-weight: 600;
     }
 
-    .btn:hover { background: #174872; color: var(--text); }
+    .btn:hover { background: var(--brass-2); color: var(--ink); }
 
     .btn.secondary {
-      background: var(--surface2);
+      background: transparent;
       color: var(--text);
       border: 1px solid var(--border);
+      font-weight: 500;
     }
 
-    .btn.secondary:hover { background: #2c3b52; color: var(--text); }
+    .btn.secondary:hover { background: var(--surface2); color: var(--text); }
 
     .text-btn {
       background: none;
@@ -348,9 +455,9 @@
       padding: var(--space-2) var(--space-3);
     }
 
-    .method-chip:hover { background: #2c3b52; color: var(--text); }
+    .method-chip:hover { background: #24303a; color: var(--text); }
 
-    .method-chip.active { background: var(--accent-dim); color: var(--text); }
+    .method-chip.active { background: var(--surface2); color: var(--accent); border-color: var(--accent); }
 
     .result-box {
       font-family: var(--mono);
@@ -376,7 +483,7 @@
       padding: var(--space-3);
     }
 
-    .opt:hover { background: #2c3b52; color: var(--text); }
+    .opt:hover { background: #24303a; color: var(--text); }
 
     .opt.correct { border-color: var(--green); }
 
@@ -424,6 +531,32 @@
       margin-top: var(--space-6);
     }
 
+    .panel-nav .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-2);
+    }
+
+    .panel-nav .btn.secondary::before,
+    .panel-nav .btn:not(.secondary)::after {
+      content: "";
+      width: 1rem;
+      height: 1rem;
+      flex: 0 0 auto;
+      background: currentColor;
+    }
+
+    .panel-nav .btn.secondary::before {
+      -webkit-mask: var(--i-left) center / contain no-repeat;
+      mask: var(--i-left) center / contain no-repeat;
+    }
+
+    .panel-nav .btn:not(.secondary)::after {
+      -webkit-mask: var(--i-right) center / contain no-repeat;
+      mask: var(--i-right) center / contain no-repeat;
+    }
+
     .button-row {
       display: flex;
       flex-wrap: wrap;
@@ -456,6 +589,58 @@
       outline-offset: 2px;
     }
 
+    .note > p > strong::before,
+    .quiz-q > p > strong::before {
+      content: "";
+      display: inline-block;
+      width: 0.95rem;
+      height: 0.95rem;
+      margin-right: var(--space-2);
+      vertical-align: -0.12rem;
+      background: var(--accent);
+      -webkit-mask: var(--i-info) center / contain no-repeat;
+      mask: var(--i-info) center / contain no-repeat;
+    }
+
+    .note-analogy > p > strong::before { -webkit-mask-image: var(--i-bulb); mask-image: var(--i-bulb); }
+    .note-rule > p > strong::before { -webkit-mask-image: var(--i-star); mask-image: var(--i-star); }
+    .note-takeaway > p > strong::before { -webkit-mask-image: var(--i-mark); mask-image: var(--i-mark); }
+    .note-mistake > p > strong::before,
+    .note-trap > p > strong::before { -webkit-mask-image: var(--i-alert); mask-image: var(--i-alert); }
+    .quiz-q > p > strong::before { -webkit-mask-image: var(--i-check); mask-image: var(--i-check); }
+
+    details.card summary { display: flex; align-items: center; gap: var(--space-2); list-style: none; }
+    details.card summary::-webkit-details-marker { display: none; }
+
+    details.card summary::before {
+      content: "";
+      width: 0.8rem;
+      height: 0.8rem;
+      flex: 0 0 auto;
+      background: var(--muted);
+      -webkit-mask: var(--i-right) center / contain no-repeat;
+      mask: var(--i-right) center / contain no-repeat;
+    }
+
+    details[open].card summary::before { transform: rotate(90deg); }
+
+    .menu-toggle::before {
+      content: "";
+      display: inline-block;
+      width: 1rem;
+      height: 1rem;
+      margin-right: var(--space-2);
+      vertical-align: -0.15rem;
+      background: currentColor;
+      -webkit-mask: var(--i-list) center / contain no-repeat;
+      mask: var(--i-list) center / contain no-repeat;
+    }
+
+    .sidebar.menu-open .menu-toggle::before {
+      -webkit-mask-image: var(--i-x);
+      mask-image: var(--i-x);
+    }
+
     [hidden] { display: none !important; }
 
     @media (max-width: 900px) {
@@ -481,9 +666,10 @@
       .logo-sub { display: none; }
       .home-link { display: none; margin: 0; }
       .sidebar.menu-open .home-link {
-        display: block;
-        padding: var(--space-3) var(--space-4) 0;
+        display: inline-flex;
+        margin: var(--space-3) var(--space-4) 0;
       }
+      .logo-mark { width: 1.75rem; height: 1.75rem; }
       .progress-box { margin: var(--space-3) var(--space-4) 0; }
       .menu-toggle {
         display: block;
@@ -545,7 +731,8 @@
       .method-chip { padding: var(--space-3); }
       input, select { padding: var(--space-3); }
       pre, .table-wrap { max-width: 100%; }
-      h1 { font-size: 1.6rem; }
+      h1 { font-size: 2rem; }
+      h2 { font-size: 1.4rem; }
     }
   </style>
 </head>
@@ -555,8 +742,11 @@
   <aside class="sidebar">
     <div class="sidebar-bar">
       <div class="logo">
-        <strong>Java basics</strong>
-        <div class="logo-sub">A first programming tutor</div>
+        <span class="logo-mark" aria-hidden="true"></span>
+        <div>
+          <strong>Java basics</strong>
+          <div class="logo-sub">A first programming tutor</div>
+        </div>
       </div>
       <button class="menu-toggle btn secondary" id="menuToggle" type="button" aria-expanded="false" aria-controls="navLinks">How to study</button>
     </div>
@@ -591,7 +781,7 @@
       <h1>How to study this tutor</h1>
       <p class="lead">You will learn to read and write small Java programs, starting from a single instruction and ending with a score report.</p>
       <p>No earlier programming class is required. Each new word is explained the first time it appears.</p>
-      <div class="card"><p><strong>Golden rule.</strong> A program is a list of exact steps. The computer follows that list from top to bottom. It does not guess what you meant.</p></div>
+      <div class="card note note-rule"><p><strong>Golden rule.</strong> A program is a list of exact steps. The computer follows that list from top to bottom. It does not guess what you meant.</p></div>
       <h2>What you will be able to do</h2>
       <ul>
         <li>Explain what a program is, using input, process, and output.</li>
@@ -612,8 +802,8 @@
         <li>Mark the section done when you can explain it out loud.</li>
         <li>Use Next. The sidebar is your roadmap, and you can jump back any time.</li>
       </ol>
-      <div class="card"><p><strong>Two kinds of code.</strong> The dark blocks labeled Java are the language you are learning. You could save one as a <code>.java</code> file and run it with a Java compiler. The sidebar, buttons, and boxes are this lesson page. The page is built with HTML, CSS, and JavaScript so you can practice here. You do not need to learn those three to learn Java.</p></div>
-      <div class="card"><p><strong>Tip.</strong> This browser remembers which sections you mark done, on this computer only. A simulator on this page copies Java's rules for the examples. It is not a Java compiler. When a result matters, the page shows the Java and the simulator side by side.</p></div>
+      <div class="card note note-tip"><p><strong>Two kinds of code.</strong> The dark blocks labeled Java are the language you are learning. You could save one as a <code>.java</code> file and run it with a Java compiler. The sidebar, buttons, and boxes are this lesson page. The page is built with HTML, CSS, and JavaScript so you can practice here. You do not need to learn those three to learn Java.</p></div>
+      <div class="card note note-tip"><p><strong>Tip.</strong> This browser remembers which sections you mark done, on this computer only. A simulator on this page copies Java's rules for the examples. It is not a Java compiler. When a result matters, the page shows the Java and the simulator side by side.</p></div>
       <h2>Roadmap</h2>
       <ol class="steps" id="roadmap">
         <li><button class="text-btn" type="button" data-go="what">What programming is</button><span class="road-state" data-road="what"></span></li>
@@ -644,7 +834,7 @@
       <h1>What programming is</h1>
       <p class="lead">Programming is writing exact instructions that a computer can follow.</p>
       <p>People can hear a fuzzy request and fill in the gaps. A computer cannot. If a step is missing, or the order is wrong, the result is wrong. That is not the computer being difficult. It is the computer doing exactly what the list says.</p>
-      <div class="card"><p><strong>Analogy.</strong> A recipe is a program for a cook. "Add salt" is too vague, because the cook must guess the amount. "Add 1 teaspoon of salt" is an instruction. A program is a recipe written so carefully that no guessing is left.</p></div>
+      <div class="card note note-analogy"><p><strong>Analogy.</strong> A recipe is a program for a cook. "Add salt" is too vague, because the cook must guess the amount. "Add 1 teaspoon of salt" is an instruction. A program is a recipe written so carefully that no guessing is left.</p></div>
       <h2>A first look at Java</h2>
       <p>Java is one programming language. This is Java. Each line is one instruction. The computer starts at the top.</p>
       <p>Java:</p>
@@ -694,8 +884,8 @@ Wait two minutes</div>
         <p>Simulator result:</p>
         <div class="result-box" id="teaResult" aria-live="polite"></div>
       </div>
-      <div class="card"><p><strong>Mistake.</strong> Beginners write the way they talk to a friend: "make it nice" or "do the usual thing." Those words hide choices. Name the action, the amount, and the order.</p></div>
-      <div class="card"><p><strong>Key takeaway.</strong> A program is an exact list. Order matters, because the computer will not rearrange it for you.</p></div>
+      <div class="card note note-mistake"><p><strong>Mistake.</strong> Beginners write the way they talk to a friend: "make it nice" or "do the usual thing." Those words hide choices. Name the action, the amount, and the order.</p></div>
+      <div class="card note note-takeaway"><p><strong>Key takeaway.</strong> A program is an exact list. Order matters, because the computer will not rearrange it for you.</p></div>
       <div class="card quiz-q" data-why="A program needs an action and an amount. Words like some, better, and seems done leave a guess in the instruction.">
         <p><strong>Check.</strong> Which instruction can a computer follow without guessing?</p>
         <button class="opt" type="button" data-correct="false" data-label="Add some salt">Add some salt</button>
@@ -718,7 +908,7 @@ Wait two minutes</div>
       <h1>How a program works</h1>
       <p class="lead">Most small programs do three things: take data in, work on it, and send a result out.</p>
       <p>Those three parts have names. <strong>Input</strong> is data that comes in. <strong>Process</strong> is the work. <strong>Output</strong> is the result that comes out. A program only knows the input you give it. It does not remember the price from a conversation you had away from the keyboard.</p>
-      <div class="card"><p><strong>Analogy.</strong> A cashier receives money (input), subtracts the price (process), and hands you the change (output). If you never say the price, the cashier cannot invent it. Your program has the same limit.</p></div>
+      <div class="card note note-analogy"><p><strong>Analogy.</strong> A cashier receives money (input), subtracts the price (process), and hands you the change (output). If you never say the price, the cashier cannot invent it. Your program has the same limit.</p></div>
       <h2>Change from a purchase</h2>
       <p>The sample price is 12 and the amount paid is 20. The work is subtraction.</p>
       <p>Java, inside <code>main</code>:</p>
@@ -770,8 +960,8 @@ Wait two minutes</div>
         <p>Simulator result:</p>
         <div class="result-box" id="changeResult" aria-live="polite"></div>
       </div>
-      <div class="card"><p><strong>Mistake.</strong> Writing a program that uses a fact you never stored. If the price is only in your head, <code>price</code> does not exist yet. Every fact the process needs must be input, or a number you typed into the program.</p></div>
-      <div class="card"><p><strong>Key takeaway.</strong> Find the input, name the process, and check the output. When a program misbehaves, one of those three is usually the reason.</p></div>
+      <div class="card note note-mistake"><p><strong>Mistake.</strong> Writing a program that uses a fact you never stored. If the price is only in your head, <code>price</code> does not exist yet. Every fact the process needs must be input, or a number you typed into the program.</p></div>
+      <div class="card note note-takeaway"><p><strong>Key takeaway.</strong> Find the input, name the process, and check the output. When a program misbehaves, one of those three is usually the reason.</p></div>
       <div class="card quiz-q" data-why="The process is the subtraction. 20 minus 12 is 8, and println prints that stored result.">
         <p><strong>Check.</strong> price is 12 and paid is 20. What is printed by <code>change = paid - price</code>?</p>
         <button class="opt" type="button" data-correct="false" data-label="12">12</button>
@@ -794,7 +984,7 @@ Wait two minutes</div>
       <h1>Java syntax</h1>
       <p class="lead">Syntax is the grammar: the rules for how symbols and words may be arranged.</p>
       <p>English rejects "Cat the sat" even though the words are familiar. Java rejects a line when a semicolon, quote, brace, or capital letter is in the wrong place. A <strong>compiler</strong> is the checker that translates Java before it can run. If the grammar is wrong, the compiler stops and reports an error. It does not run the program, and it does not fix the line for you.</p>
-      <div class="card"><p><strong>Analogy.</strong> A form with required boxes works the same way. If your name is written on the signature line, the form is rejected. The reader does not hunt through the page to guess which line you meant.</p></div>
+      <div class="card note note-analogy"><p><strong>Analogy.</strong> A form with required boxes works the same way. If your name is written on the signature line, the form is rejected. The reader does not hunt through the page to guess which line you meant.</p></div>
       <h2>The boilerplate frame</h2>
       <p><strong>Boilerplate</strong> means the same starting lines you wrap around the work. Copy this frame often. Your real steps go where the comment is.</p>
       <p>Java:</p>
@@ -815,7 +1005,7 @@ Wait two minutes</div>
         <li><code>//</code> starts a comment. Java skips the rest of that line. Comments are notes for people.</li>
         <li><code>System.out.println("Hello");</code> prints Hello and ends with a semicolon.</li>
       </ol>
-      <div class="card"><p><strong>Tip.</strong> Java cares about capital letters. <code>System</code> and <code>system</code> are different. Text uses double quotes. A comment uses <code>//</code> and is not printed.</p></div>
+      <div class="card note note-tip"><p><strong>Tip.</strong> Java cares about capital letters. <code>System</code> and <code>system</code> are different. Text uses double quotes. A comment uses <code>//</code> and is not printed.</p></div>
       <h2>Before and after</h2>
       <div class="compare">
         <div class="card">
@@ -891,8 +1081,8 @@ Wait two minutes</div>
           <p>The public class is named Goodbye, but the file is Hello.java. Those names must match, including capitals. Rename the class, or rename the file to Goodbye.java.</p>
         </div>
       </div>
-      <div class="card"><p><strong>Exam trap.</strong> A missing semicolon, a lowercase <code>string</code>, single quotes around a word, and a class name that does not match the file are four of the first errors beginners hit. The compiler message names the problem. Read it as a grammar note, not as a verdict that you cannot program.</p></div>
-      <div class="card"><p><strong>Key takeaway.</strong> Statements end with semicolons, groups use braces, text uses double quotes, and the public class name matches the file name.</p></div>
+      <div class="card note note-trap"><p><strong>Exam trap.</strong> A missing semicolon, a lowercase <code>string</code>, single quotes around a word, and a class name that does not match the file are four of the first errors beginners hit. The compiler message names the problem. Read it as a grammar note, not as a verdict that you cannot program.</p></div>
+      <div class="card note note-takeaway"><p><strong>Key takeaway.</strong> Statements end with semicolons, groups use braces, text uses double quotes, and the public class name matches the file name.</p></div>
       <div class="card quiz-q" data-why="A public class must use the same name as its file, including capital letters. Hello and hello are different names in Java.">
         <p><strong>Check.</strong> The file is saved as Hello.java. Which class name will compile?</p>
         <button class="opt" type="button" data-correct="false" data-label="hello">hello</button>
@@ -914,7 +1104,7 @@ Wait two minutes</div>
       <h1>Variables and types</h1>
       <p class="lead">A variable is a labeled box that holds one value. The type says what kind of value the box may hold.</p>
       <p>You create a box with a <strong>declaration</strong>: the type, then the name, then <code>=</code>, then the value. The word <strong>assign</strong> means "put this value into the box." A later assignment replaces what was inside. It does not create a second box.</p>
-      <div class="card"><p><strong>Analogy.</strong> A closet has labeled boxes. The label is the variable name. The kind of box is the type: a tray for whole numbers, a jar for decimals, a switch for yes or no, a folder for text. Java refuses to put text into a whole-number tray.</p></div>
+      <div class="card note note-analogy"><p><strong>Analogy.</strong> A closet has labeled boxes. The label is the variable name. The kind of box is the type: a tray for whole numbers, a jar for decimals, a switch for yes or no, a folder for text. Java refuses to put text into a whole-number tray.</p></div>
       <h2>Maya's quiz facts</h2>
       <p>Java, inside <code>main</code>:</p>
 <pre><span class="fn">String</span> name = <span class="str">"Maya"</span>;
@@ -957,7 +1147,7 @@ Wait two minutes</div>
           </tbody>
         </table>
       </div>
-      <div class="card"><p><strong>Tip.</strong> Start a variable name with a lowercase letter, then use letters or digits: <code>scoreOne</code>. No spaces. Class names, like <code>Hello</code>, usually start with a capital. Variable names usually do not.</p></div>
+      <div class="card note note-tip"><p><strong>Tip.</strong> Start a variable name with a lowercase letter, then use letters or digits: <code>scoreOne</code>. No spaces. Class names, like <code>Hello</code>, usually start with a capital. Variable names usually do not.</p></div>
       <h2>Try it yourself</h2>
       <div class="playground">
         <p>Build one box. If the value does not fit the type, the page says why. Try your age as an <code>int</code>, then try your name as a <code>String</code>.</p>
@@ -986,8 +1176,8 @@ Wait two minutes</div>
         <pre id="varLine"></pre>
         <div class="result-box" id="varMsg" aria-live="polite"></div>
       </div>
-      <div class="card"><p><strong>Mistake.</strong> Using a box before you store a value, or writing <code>string</code> in lowercase. Local variables in <code>main</code> must be assigned before they are read. The type <code>String</code> always has a capital S.</p></div>
-      <div class="card"><p><strong>Key takeaway.</strong> Type, name, value. The type is the kind of box. The name is the label. <code>=</code> puts a fitting value inside.</p></div>
+      <div class="card note note-mistake"><p><strong>Mistake.</strong> Using a box before you store a value, or writing <code>string</code> in lowercase. Local variables in <code>main</code> must be assigned before they are read. The type <code>String</code> always has a capital S.</p></div>
+      <div class="card note note-takeaway"><p><strong>Key takeaway.</strong> Type, name, value. The type is the kind of box. The name is the label. <code>=</code> puts a fitting value inside.</p></div>
       <div class="card quiz-q" data-why="int stores a whole number. 73.75 needs double, true needs boolean, and quoted Maya needs String.">
         <p><strong>Check.</strong> Which value can be stored in an <code>int</code> variable?</p>
         <button class="opt" type="button" data-correct="false" data-label="73.75">73.75</button>
@@ -1010,7 +1200,7 @@ Wait two minutes</div>
       <h1>Operators</h1>
       <p class="lead">An operator is a symbol that does a job on values, such as adding them or asking whether they are equal.</p>
       <p><code>=</code> is not a question. It stores the value on the right into the box on the left. <code>==</code> is the question "are these equal?" Mixing them up is one of the most common early bugs.</p>
-      <div class="card"><p><strong>Analogy.</strong> Arithmetic operators are calculator buttons. Comparison operators are yes-or-no questions. The remainder operator <code>%</code> is what is left after you share cookies evenly: 10 cookies and 3 friends means each friend gets 3, and 1 cookie remains.</p></div>
+      <div class="card note note-analogy"><p><strong>Analogy.</strong> Arithmetic operators are calculator buttons. Comparison operators are yes-or-no questions. The remainder operator <code>%</code> is what is left after you share cookies evenly: 10 cookies and 3 friends means each friend gets 3, and 1 cookie remains.</p></div>
       <h2>Sharing 10 cookies</h2>
       <p>Java, inside <code>main</code>:</p>
 <pre><span class="kw">int</span> cookies = <span class="num">10</span>;
@@ -1120,8 +1310,8 @@ Wait two minutes</div>
 }</pre>
         <div class="result-box" id="logicOut" aria-live="polite"></div>
       </div>
-      <div class="card"><p><strong>Exam trap.</strong> <code>7 / 2</code> is 3 when both numbers are <code>int</code>, not 3.5. The fraction is cut off, not rounded. <code>7.0 / 2.0</code> keeps a decimal. Also, <code>=</code> stores a value and <code>==</code> compares.</p></div>
-      <div class="card"><p><strong>Key takeaway.</strong> <code>/</code> and <code>%</code> answer different questions. Integer division drops the fraction. <code>=</code> stores. <code>==</code> asks.</p></div>
+      <div class="card note note-trap"><p><strong>Exam trap.</strong> <code>7 / 2</code> is 3 when both numbers are <code>int</code>, not 3.5. The fraction is cut off, not rounded. <code>7.0 / 2.0</code> keeps a decimal. Also, <code>=</code> stores a value and <code>==</code> compares.</p></div>
+      <div class="card note note-takeaway"><p><strong>Key takeaway.</strong> <code>/</code> and <code>%</code> answer different questions. Integer division drops the fraction. <code>=</code> stores. <code>==</code> asks.</p></div>
       <div class="card quiz-q" data-why="The % operator is the remainder. 3 fits into 10 three times, and 1 is left over.">
         <p><strong>Check.</strong> What is <code>10 % 3</code>?</p>
         <button class="opt" type="button" data-correct="false" data-label="3">3</button>
@@ -1144,7 +1334,7 @@ Wait two minutes</div>
       <h1>Input and output</h1>
       <p class="lead">Output is what the program prints. Input is what a person types while the program is running.</p>
       <p><code>System.out.println</code> prints and then moves to the next line. <code>System.out.print</code> prints and stays on the same line. To listen to the keyboard, Java uses a <strong>Scanner</strong>. You create one, then ask it for a line of text or a whole number.</p>
-      <div class="card"><p><strong>Analogy.</strong> <code>println</code> is speaking a sentence and taking a breath. <code>print</code> is speaking and staying on the same line so the person can answer beside the question. A Scanner is the program's ears.</p></div>
+      <div class="card note note-analogy"><p><strong>Analogy.</strong> <code>println</code> is speaking a sentence and taking a breath. <code>print</code> is speaking and staying on the same line so the person can answer beside the question. A Scanner is the program's ears.</p></div>
       <h2>Ask for a name</h2>
       <p>Java:</p>
 <pre><span class="kw">import</span> java.util.Scanner;
@@ -1207,7 +1397,7 @@ Hello, Maya</div>
         <p>Simulator result:</p>
         <div class="result-box" id="ioOut" aria-live="polite"></div>
       </div>
-      <div class="card"><p><strong>Exam trap.</strong> <code>nextInt()</code> reads the digits and stops before the Enter key. If the next listen is <code>nextLine()</code>, that call can swallow the leftover Enter and return an empty line. After <code>nextInt()</code>, call an extra <code>nextLine()</code> to clear that leftover before you read real text.</p></div>
+      <div class="card note note-trap"><p><strong>Exam trap.</strong> <code>nextInt()</code> reads the digits and stops before the Enter key. If the next listen is <code>nextLine()</code>, that call can swallow the leftover Enter and return an empty line. After <code>nextInt()</code>, call an extra <code>nextLine()</code> to clear that leftover before you read real text.</p></div>
       <details class="card">
         <summary>The leftover Enter, in code</summary>
 <pre><span class="kw">int</span> age = input.nextInt();
@@ -1215,7 +1405,7 @@ input.nextLine(); <span class="cm">// clear the leftover Enter</span>
 <span class="fn">String</span> city = input.nextLine();</pre>
         <p>Skip the extra <code>nextLine()</code> and <code>city</code> may become an empty string even though the person typed a city.</p>
       </details>
-      <div class="card"><p><strong>Key takeaway.</strong> <code>println</code> speaks and moves down. <code>nextLine</code> hears a whole line. <code>nextInt</code> hears a whole number. Joining text uses <code>+</code>.</p></div>
+      <div class="card note note-takeaway"><p><strong>Key takeaway.</strong> <code>println</code> speaks and moves down. <code>nextLine</code> hears a whole line. <code>nextInt</code> hears a whole number. Joining text uses <code>+</code>.</p></div>
       <div class="card quiz-q" data-why="nextLine waits for Enter and returns the whole line, spaces included. nextInt reads a whole number only. println writes output. main is the starting point.">
         <p><strong>Check.</strong> Which action reads a full line of text, including spaces?</p>
         <button class="opt" type="button" data-correct="false" data-label="nextInt">nextInt</button>
@@ -1237,7 +1427,7 @@ input.nextLine(); <span class="cm">// clear the leftover Enter</span>
       <h1>Decisions</h1>
       <p class="lead"><code>if</code> runs a group of lines only when a yes-or-no test is true. <code>else</code> runs when that test is false.</p>
       <p>The test goes in parentheses and must be a boolean: true or false. Comparison operators such as <code>&gt;=</code> produce that boolean. You can chain more tests with <code>else if</code>. Java checks them from top to bottom and runs only the first match.</p>
-      <div class="card"><p><strong>Analogy.</strong> A decision is a fork in a path. The sign says "score at least 60." If the sign is true, you take the Pass path. If it is false, you take the other path. You do not walk both paths.</p></div>
+      <div class="card note note-analogy"><p><strong>Analogy.</strong> A decision is a fork in a path. The sign says "score at least 60." If the sign is true, you take the Pass path. If it is false, you take the other path. You do not walk both paths.</p></div>
       <h2>Pass or try again</h2>
       <p>Java, inside <code>main</code>:</p>
 <pre><span class="kw">int</span> score = <span class="num">72</span>;
@@ -1298,8 +1488,8 @@ input.nextLine(); <span class="cm">// clear the leftover Enter</span>
         <p>Simulator result:</p>
         <div class="result-box" id="gradeOut" aria-live="polite"></div>
       </div>
-      <div class="card"><p><strong>Exam trap.</strong> A semicolon right after <code>if (score &gt;= 60)</code> closes the decision before the braces. The lines you meant to protect then run every time. Also compare numbers with <code>==</code>, never with a single <code>=</code>.</p></div>
-      <div class="card"><p><strong>Key takeaway.</strong> <code>if</code> takes the true path. <code>else</code> takes the false path. <code>else if</code> tries the next question only when earlier questions were false.</p></div>
+      <div class="card note note-trap"><p><strong>Exam trap.</strong> A semicolon right after <code>if (score &gt;= 60)</code> closes the decision before the braces. The lines you meant to protect then run every time. Also compare numbers with <code>==</code>, never with a single <code>=</code>.</p></div>
+      <div class="card note note-takeaway"><p><strong>Key takeaway.</strong> <code>if</code> takes the true path. <code>else</code> takes the false path. <code>else if</code> tries the next question only when earlier questions were false.</p></div>
       <div class="card quiz-q" data-why="59 >= 60 is false, so Java skips the if body and runs the else body.">
         <p><strong>Check.</strong> score is 59. The test is <code>score &gt;= 60</code>. What runs?</p>
         <button class="opt" type="button" data-correct="false" data-label="The if branch">The if branch</button>
@@ -1322,7 +1512,7 @@ input.nextLine(); <span class="cm">// clear the leftover Enter</span>
       <h1>Loops</h1>
       <p class="lead">A loop repeats a group of lines while a test stays true.</p>
       <p>Use a <code>for</code> loop when you can count the repeats. Use a <code>while</code> loop when you should keep going until a situation changes. Both need a test that can eventually become false. Otherwise the program repeats forever.</p>
-      <div class="card"><p><strong>Analogy.</strong> "Run 3 laps" is a <code>for</code> loop: you know the count before you start. "Stir until the sauce thickens" is a <code>while</code> loop: you check the sauce, stir, and check again. If you never look at the sauce, you would stir forever.</p></div>
+      <div class="card note note-analogy"><p><strong>Analogy.</strong> "Run 3 laps" is a <code>for</code> loop: you know the count before you start. "Stir until the sauce thickens" is a <code>while</code> loop: you check the sauce, stir, and check again. If you never look at the sauce, you would stir forever.</p></div>
       <h2>Three laps</h2>
       <p>Java, inside <code>main</code>:</p>
 <pre><span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">1</span>; i &lt;= <span class="num">3</span>; i++) {
@@ -1374,7 +1564,7 @@ Lap 3</div>
         </div>
         <div class="result-box" id="lapOut" aria-live="polite"></div>
       </div>
-      <div class="card"><p><strong>Exam trap.</strong> <code>i &lt;= 3</code> includes 3. <code>i &lt; 3</code> stops before 3, so a counter that starts at 1 prints only Lap 1 and Lap 2. The other trap is a <code>while</code> that never changes <code>i</code>. The test stays true, and the program never reaches the next line after the loop.</p></div>
+      <div class="card note note-trap"><p><strong>Exam trap.</strong> <code>i &lt;= 3</code> includes 3. <code>i &lt; 3</code> stops before 3, so a counter that starts at 1 prints only Lap 1 and Lap 2. The other trap is a <code>while</code> that never changes <code>i</code>. The test stays true, and the program never reaches the next line after the loop.</p></div>
       <details class="card">
         <summary>A loop that never stops</summary>
 <pre><span class="kw">int</span> i = <span class="num">1</span>;
@@ -1383,7 +1573,7 @@ Lap 3</div>
 }</pre>
         <p><code>i</code> stays 1, so <code>i &lt;= 3</code> stays true. Add <code>i++</code> inside the braces, the way the working <code>while</code> example does.</p>
       </details>
-      <div class="card"><p><strong>Key takeaway.</strong> A counted loop needs a start, a test, and a change. If the change is missing, or the test can never fail, the loop does not end.</p></div>
+      <div class="card note note-takeaway"><p><strong>Key takeaway.</strong> A counted loop needs a start, a test, and a change. If the change is missing, or the test can never fail, the loop does not end.</p></div>
       <div class="card quiz-q" data-why="i becomes 1, then 2, then 3. Each of those values passes i <= 3. When i becomes 4, the test fails and the loop stops.">
         <p><strong>Check.</strong> How many lines does <code>for (int i = 1; i &lt;= 3; i++)</code> print?</p>
         <button class="opt" type="button" data-correct="false" data-label="2">2</button>
@@ -1407,7 +1597,7 @@ Lap 3</div>
       <p class="lead">A method is a named action you can run again by calling its name.</p>
       <p>You have already called methods. <code>println</code> and <code>nextLine</code> are methods other people wrote. A <strong>call</strong> is the moment you use the name, usually with parentheses. Now you will write your own.</p>
       <p>A <strong>parameter</strong> is a box in the method's definition, waiting for a value. An <strong>argument</strong> is the value you hand in at the call. <code>return</code> sends a value back to the caller and leaves the method. <code>void</code> means "this method does not send a value back."</p>
-      <div class="card"><p><strong>Analogy.</strong> A coffee-machine button is a method. "Beans" and "water" printed on the machine are parameters. The beans you insert are arguments. The cup that comes out is the return value. Printing a message is like the machine beeping. The beep is not the cup. If you needed the cup, a beep is not enough.</p></div>
+      <div class="card note note-analogy"><p><strong>Analogy.</strong> A coffee-machine button is a method. "Beans" and "water" printed on the machine are parameters. The beans you insert are arguments. The cup that comes out is the return value. Printing a message is like the machine beeping. The beep is not the cup. If you needed the cup, a beep is not enough.</p></div>
       <h2>Add two scores</h2>
       <p>Java:</p>
 <pre><span class="kw">public class</span> <span class="fn">Adder</span> {
@@ -1458,15 +1648,15 @@ Lap 3</div>
         <p>Simulator result:</p>
         <div class="result-box" id="addOut" aria-live="polite"></div>
       </div>
-      <div class="card"><p><strong>Exam trap.</strong> To compare text, call <code>equals</code>. <code>==</code> on two strings asks whether they are the same object, not whether the letters match. Beginners should write <code>name.equals("Maya")</code>.</p></div>
+      <div class="card note note-trap"><p><strong>Exam trap.</strong> To compare text, call <code>equals</code>. <code>==</code> on two strings asks whether they are the same object, not whether the letters match. Beginners should write <code>name.equals("Maya")</code>.</p></div>
       <p>Java, inside <code>main</code>:</p>
 <pre><span class="fn">String</span> name = <span class="str">"Maya"</span>;
 <span class="kw">if</span> (name.equals(<span class="str">"Maya"</span>)) {
     <span class="fn">System</span>.out.println(<span class="str">"Hi Maya"</span>);
 }</pre>
       <p><code>equals</code> is a method the String type already has. It returns <code>true</code> or <code>false</code>. Here it returns true, so the program prints Hi Maya.</p>
-      <div class="card"><p><strong>Mistake.</strong> Forgetting <code>return</code> in a method that promised a value, or printing inside the method and expecting <code>main</code> to receive that printed number. The caller only receives what you return.</p></div>
-      <div class="card"><p><strong>Key takeaway.</strong> A method packages steps under a name. Arguments go in. <code>return</code> sends one value back. <code>void</code> sends nothing back.</p></div>
+      <div class="card note note-mistake"><p><strong>Mistake.</strong> Forgetting <code>return</code> in a method that promised a value, or printing inside the method and expecting <code>main</code> to receive that printed number. The caller only receives what you return.</p></div>
+      <div class="card note note-takeaway"><p><strong>Key takeaway.</strong> A method packages steps under a name. Arguments go in. <code>return</code> sends one value back. <code>void</code> sends nothing back.</p></div>
       <div class="card quiz-q" data-why="80 and 55 are the arguments. add returns their sum, 135, and main stores that return value.">
         <p><strong>Check.</strong> <code>add</code> returns <code>a + b</code>. What is the result of <code>add(80, 55)</code>?</p>
         <button class="opt" type="button" data-correct="false" data-label="80">80</button>
@@ -1488,7 +1678,7 @@ Lap 3</div>
       <h1>Arrays</h1>
       <p class="lead">An array is a numbered row of boxes that share one name. The position number is the index, and the first index is 0.</p>
       <p>One <code>int</code> holds one score. An <code>int[]</code> holds a row of scores. You read a box with <code>scores[0]</code>, <code>scores[1]</code>, and so on. <code>scores.length</code> is how many boxes exist. It has no parentheses. The last valid index is <code>length - 1</code>, not <code>length</code>.</p>
-      <div class="card"><p><strong>Analogy.</strong> A row of mailboxes is numbered starting at 0, not 1. If four mailboxes exist, they are 0, 1, 2, and 3. Asking for mailbox 4 does not wrap around. There is no mailbox 4.</p></div>
+      <div class="card note note-analogy"><p><strong>Analogy.</strong> A row of mailboxes is numbered starting at 0, not 1. If four mailboxes exist, they are 0, 1, 2, and 3. Asking for mailbox 4 does not wrap around. There is no mailbox 4.</p></div>
       <h2>Four quiz scores</h2>
       <p>Java, inside <code>main</code>:</p>
 <pre><span class="kw">int</span>[] scores = {<span class="num">80</span>, <span class="num">55</span>, <span class="num">90</span>, <span class="num">70</span>};
@@ -1559,8 +1749,8 @@ Lap 3</div>
         <p>Simulator result:</p>
         <div class="result-box" id="arrOut" aria-live="polite"></div>
       </div>
-      <div class="card"><p><strong>Exam trap.</strong> The first index is 0. For four scores, the last index is 3. <code>length</code> is 4 and is not a valid index. <code>scores.length</code> has no parentheses. A text value uses <code>name.length()</code> with parentheses. Arrays and strings do not share that spelling.</p></div>
-      <div class="card"><p><strong>Key takeaway.</strong> One name, many numbered boxes, counting from 0. Loop while <code>i &lt; scores.length</code>.</p></div>
+      <div class="card note note-trap"><p><strong>Exam trap.</strong> The first index is 0. For four scores, the last index is 3. <code>length</code> is 4 and is not a valid index. <code>scores.length</code> has no parentheses. A text value uses <code>name.length()</code> with parentheses. Arrays and strings do not share that spelling.</p></div>
+      <div class="card note note-takeaway"><p><strong>Key takeaway.</strong> One name, many numbered boxes, counting from 0. Loop while <code>i &lt; scores.length</code>.</p></div>
       <div class="card quiz-q" data-why="Four values use indexes 0, 1, 2, and 3. length is 4. The last index is length - 1, which is 3. The last value, 70, is what the box holds, not the index.">
         <p><strong>Check.</strong> <code>int[] scores = {80, 55, 90, 70}</code>. What is the last valid index?</p>
         <button class="opt" type="button" data-correct="false" data-label="0">0</button>
@@ -1583,7 +1773,7 @@ Lap 3</div>
       <h1>Solve a problem</h1>
       <p class="lead">Write the goal in plain words before you write Java. Code is the last step, not the first.</p>
       <p>Beginners often stare at a blank file because they are trying to invent syntax and the idea at the same time. Separate them. A short plan tells you which tools you need: a variable, a decision, a loop, a method, or an array.</p>
-      <div class="card"><p><strong>Analogy.</strong> Planning a trip comes before driving. You name the destination, the start, and the stops. Then you drive. Starting the car with no destination feels busy, and you still do not arrive.</p></div>
+      <div class="card note note-analogy"><p><strong>Analogy.</strong> Planning a trip comes before driving. You name the destination, the start, and the stops. Then you drive. Starting the car with no destination feels busy, and you still do not arrive.</p></div>
       <h2>The six steps</h2>
       <ol>
         <li>Say the goal in one sentence.</li>
@@ -1655,8 +1845,8 @@ Lap 3</div>
         <p>Simulator result:</p>
         <div class="result-box" id="solveOut" aria-live="polite"></div>
       </div>
-      <div class="card"><p><strong>Mistake.</strong> Typing Java before the goal, the input, and the output are clear. A loop is not a plan. It is a tool you choose after you know you must visit every item.</p></div>
-      <div class="card"><p><strong>Key takeaway.</strong> One sentence for the goal, a sample you can check by hand, then Java. If the sample and the program disagree, trust the hand check and fix the program.</p></div>
+      <div class="card note note-mistake"><p><strong>Mistake.</strong> Typing Java before the goal, the input, and the output are clear. A loop is not a plan. It is a tool you choose after you know you must visit every item.</p></div>
+      <div class="card note note-takeaway"><p><strong>Key takeaway.</strong> One sentence for the goal, a sample you can check by hand, then Java. If the sample and the program disagree, trust the hand check and fix the program.</p></div>
       <div class="card quiz-q" data-why="A one-sentence goal tells you the input, the output, and the steps. The import line and the loops come after that plan.">
         <p><strong>Check.</strong> What should you write first?</p>
         <button class="opt" type="button" data-correct="false" data-label="The whole program from memory">The whole program from memory</button>
@@ -1679,7 +1869,7 @@ Lap 3</div>
       <h1>Project: score report</h1>
       <p class="lead">Build one program that stores four scores, labels each as Pass or Fail, and prints the average.</p>
       <p>This uses the whole toolbox. Variables hold the pass mark and the average. An array holds the scores. A loop visits each score. An <code>if</code> chooses Pass or Fail. A method named <code>average</code> returns the decimal average. Scanner reads the four numbers from the keyboard. On this page, the number boxes stand in for that typing.</p>
-      <div class="card"><p><strong>Analogy.</strong> A teacher walks a row of mailboxes. At each box she says the score and whether it passed. After the row, she announces the class average. The loop is the walk. The method is the average calculation she can reuse.</p></div>
+      <div class="card note note-analogy"><p><strong>Analogy.</strong> A teacher walks a row of mailboxes. At each box she says the score and whether it passed. After the row, she announces the class average. The loop is the walk. The method is the average calculation she can reuse.</p></div>
       <h2>The Java program</h2>
       <p>Java:</p>
 <pre><span class="kw">import</span> java.util.Scanner;
@@ -1769,8 +1959,8 @@ Class result: Pass</div>
         <p>Simulator result:</p>
         <div class="result-box" id="projOut" aria-live="polite"></div>
       </div>
-      <div class="card"><p><strong>Exam trap.</strong> <code>sum / scores.length</code> looks right and quietly drops the fraction. Cast one side to <code>double</code> before you divide. Also print <code>i + 1</code> for humans, while the real index stays at <code>i</code>.</p></div>
-      <div class="card"><p><strong>Key takeaway.</strong> The report is a loop around a decision, plus a method that returns the average. Each tool does one job you already practiced.</p></div>
+      <div class="card note note-trap"><p><strong>Exam trap.</strong> <code>sum / scores.length</code> looks right and quietly drops the fraction. Cast one side to <code>double</code> before you divide. Also print <code>i + 1</code> for humans, while the real index stays at <code>i</code>.</p></div>
+      <div class="card note note-takeaway"><p><strong>Key takeaway.</strong> The report is a loop around a decision, plus a method that returns the average. Each tool does one job you already practiced.</p></div>
       <div class="card quiz-q" data-why="80, 90, and 70 are at least 60. 55 is not. The loop checks each score on its own, so three scores pass.">
         <p><strong>Check.</strong> The scores are 80, 55, 90, and 70. The pass mark is 60. How many scores pass?</p>
         <button class="opt" type="button" data-correct="false" data-label="1">1</button>
