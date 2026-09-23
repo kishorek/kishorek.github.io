@@ -1,0 +1,2620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Java basics: Beginner tutor</title>
+  <style>
+    :root {
+      --bg: #0f1419;
+      --surface: #1a2332;
+      --surface2: #243044;
+      --border: #3d4d66;
+      --text: #e8eef6;
+      --muted: #b6c2d4;
+      --accent: #3b9eff;
+      --accent-dim: #1e5a94;
+      --green: #3dd68c;
+      --green-dim: #145c38;
+      --orange: #f5a524;
+      --red: #f07178;
+      --code-bg: #0d1117;
+      --radius: 8px;
+      --font: system-ui, "Segoe UI", sans-serif;
+      --mono: ui-monospace, "Cascadia Code", "Consolas", monospace;
+      --space-1: 4px;
+      --space-2: 8px;
+      --space-3: 12px;
+      --space-4: 16px;
+      --space-5: 24px;
+      --space-6: 32px;
+      --space-7: 48px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+
+    html { color-scheme: dark; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: #d5deea;
+      font-family: var(--font);
+      font-size: 1.05rem;
+      line-height: 1.55;
+    }
+
+    .skip {
+      position: absolute;
+      left: -999px;
+      top: var(--space-2);
+      background: var(--accent-dim);
+      color: var(--text);
+      padding: var(--space-2) var(--space-3);
+      z-index: 3;
+    }
+
+    .skip:focus { left: var(--space-2); }
+
+    .app {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      min-height: 100vh;
+    }
+
+    .sidebar {
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      padding: var(--space-4);
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow: auto;
+    }
+
+    .logo strong {
+      display: block;
+      color: var(--text);
+      font-size: 1.25rem;
+    }
+
+    .logo-sub {
+      color: var(--muted);
+      margin-top: var(--space-1);
+    }
+
+    .home-link {
+      display: inline-block;
+      margin-top: var(--space-3);
+    }
+
+    .home-link:hover { color: var(--text); }
+
+    .progress-box { margin: var(--space-5) 0; }
+
+    .progress-label {
+      color: var(--text);
+      margin-bottom: var(--space-2);
+    }
+
+    .progress-bar {
+      height: var(--space-2);
+      background: var(--surface2);
+      border-radius: var(--radius);
+    }
+
+    .progress-fill {
+      height: var(--space-2);
+      width: 0;
+      background: var(--accent);
+      border-radius: var(--radius);
+    }
+
+    .menu-toggle { display: none; }
+
+    .nav-section {
+      color: var(--muted);
+      margin: var(--space-4) 0 var(--space-2);
+    }
+
+    .nav-btn {
+      display: block;
+      width: 100%;
+      text-align: left;
+      background: transparent;
+      color: var(--text);
+      border: 0;
+      border-radius: var(--radius);
+      padding: var(--space-2) var(--space-3);
+      font: inherit;
+      cursor: pointer;
+    }
+
+    .nav-btn:hover { background: var(--surface2); color: var(--text); }
+
+    .nav-btn.active { background: var(--accent-dim); color: var(--text); }
+
+    .main {
+      max-width: 920px;
+      padding: var(--space-6);
+    }
+
+    .panel { display: none; }
+
+    .panel.active { display: block; }
+
+    h1 {
+      font-size: 1.85rem;
+      font-weight: 700;
+      color: var(--text);
+      margin: 0 0 var(--space-3);
+      line-height: 1.2;
+    }
+
+    h2 {
+      font-size: 1.35rem;
+      font-weight: 600;
+      color: var(--text);
+      margin: var(--space-6) 0 var(--space-3);
+    }
+
+    h3 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--text);
+      margin: 0 0 var(--space-3);
+    }
+
+    p { margin: 0 0 var(--space-4); }
+
+    .lead {
+      color: var(--muted);
+      font-size: 1.1rem;
+    }
+
+    ul, ol { margin: 0 0 var(--space-4); padding-left: var(--space-5); }
+
+    li { margin-bottom: var(--space-2); }
+
+    a { color: var(--accent); }
+
+    code {
+      font-family: var(--mono);
+      color: var(--text);
+      background: var(--code-bg);
+      padding: 0 var(--space-1);
+      border-radius: var(--radius);
+    }
+
+    pre {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: var(--space-4);
+      overflow-x: auto;
+      line-height: 1.5;
+      font-family: var(--mono);
+      font-size: 0.92rem;
+      color: var(--text);
+      margin: 0 0 var(--space-4);
+    }
+
+    pre .kw { color: #d2a8ff; }
+    pre .str { color: #7ee0b0; }
+    pre .num { color: #f5a524; }
+    pre .cm { color: #9aa8bc; font-style: italic; }
+    pre .fn { color: #79c0ff; }
+
+    .card, .playground {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: var(--space-4);
+      margin-bottom: var(--space-4);
+    }
+
+    .card p:last-child, .playground p:last-child { margin-bottom: 0; }
+
+    details.card summary {
+      cursor: pointer;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    details.card > * { margin-top: var(--space-3); }
+
+    details.card > summary { margin-top: 0; }
+
+    .compare {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-4);
+      margin-bottom: var(--space-4);
+    }
+
+    .compare .card { margin-bottom: 0; }
+
+    .flow, .box-row, .chips, .fields {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-3);
+      margin-bottom: var(--space-4);
+    }
+
+    .flow-step, .var-box {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: var(--space-3);
+    }
+
+    .flow-step { flex: 1; min-width: 160px; }
+
+    .var-box { min-width: 120px; text-align: center; }
+
+    .var-box .type, .var-box .idx { color: var(--muted); font-family: var(--mono); }
+
+    .var-box .value {
+      font-family: var(--mono);
+      font-size: 1.25rem;
+      color: var(--text);
+      margin: var(--space-2) 0;
+    }
+
+    .var-box .label { color: var(--text); font-family: var(--mono); }
+
+    .var-box.selected { background: var(--code-bg); }
+
+    .table-wrap { overflow-x: auto; margin-bottom: var(--space-4); }
+
+    table { width: 100%; border-collapse: collapse; }
+
+    th, td {
+      border: 1px solid var(--border);
+      padding: var(--space-2) var(--space-3);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th { background: var(--surface2); color: var(--text); font-weight: 600; }
+
+    .field { flex: 1; min-width: 140px; }
+
+    label { display: block; color: var(--text); margin-bottom: var(--space-2); }
+
+    input, select {
+      width: 100%;
+      background: var(--code-bg);
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: var(--space-2) var(--space-3);
+      font: inherit;
+    }
+
+    .checkline {
+      display: flex;
+      gap: var(--space-3);
+      align-items: center;
+      margin-bottom: var(--space-4);
+    }
+
+    .checkline label { margin: 0; }
+
+    .checkline input { width: auto; }
+
+    .btn, .opt, .method-chip {
+      font: inherit;
+      cursor: pointer;
+      border-radius: var(--radius);
+      color: var(--text);
+    }
+
+    .btn {
+      background: var(--accent-dim);
+      color: var(--text);
+      border: 0;
+      padding: var(--space-2) var(--space-4);
+    }
+
+    .btn:hover { background: #174872; color: var(--text); }
+
+    .btn.secondary {
+      background: var(--surface2);
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+
+    .btn.secondary:hover { background: #2c3b52; color: var(--text); }
+
+    .text-btn {
+      background: none;
+      border: 0;
+      padding: 0;
+      color: var(--accent);
+      font: inherit;
+      cursor: pointer;
+      text-align: left;
+    }
+
+    .text-btn:hover { color: var(--text); }
+
+    .method-chip {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      padding: var(--space-2) var(--space-3);
+    }
+
+    .method-chip:hover { background: #2c3b52; color: var(--text); }
+
+    .method-chip.active { background: var(--accent-dim); color: var(--text); }
+
+    .result-box {
+      font-family: var(--mono);
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: var(--space-4);
+      white-space: pre-wrap;
+      color: var(--text);
+      margin: 0 0 var(--space-4);
+    }
+
+    .ok { color: var(--green); }
+    .err { color: var(--red); }
+
+    .opt {
+      display: block;
+      width: 100%;
+      text-align: left;
+      margin-bottom: var(--space-2);
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      padding: var(--space-3);
+    }
+
+    .opt:hover { background: #2c3b52; color: var(--text); }
+
+    .opt.correct { border-color: var(--green); }
+
+    .opt.wrong { border-color: var(--red); }
+
+    .opt[aria-disabled="true"] { cursor: default; }
+
+    .opt[aria-disabled="true"]:hover { background: var(--surface2); }
+
+    .feedback { margin-top: var(--space-3); }
+
+    .feedback.good { color: var(--green); }
+
+    .feedback.bad { color: var(--red); }
+
+    .quiz-q { margin-bottom: var(--space-5); }
+
+    .score-banner { font-size: 1.2rem; margin: var(--space-4) 0; color: var(--text); }
+
+    .score-banner.good { color: var(--green); }
+
+    .score-banner.mid { color: var(--orange); }
+
+    .score-banner.bad { color: var(--red); }
+
+    .mark-done {
+      display: flex;
+      gap: var(--space-3);
+      align-items: center;
+      margin-top: var(--space-5);
+    }
+
+    .mark-done label { margin: 0; }
+
+    .panel-nav {
+      display: flex;
+      justify-content: space-between;
+      gap: var(--space-3);
+      margin-top: var(--space-6);
+    }
+
+    .action-list { list-style: none; padding: 0; margin: 0 0 var(--space-4); }
+
+    .action-list li {
+      display: flex;
+      justify-content: space-between;
+      gap: var(--space-3);
+      align-items: center;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: var(--space-3);
+      margin-bottom: var(--space-2);
+    }
+
+    .action-list li span { flex: 1; }
+
+    .tea-actions { display: flex; gap: var(--space-2); }
+
+    .road-state { color: var(--text); margin-left: var(--space-2); }
+
+    button:focus-visible, input:focus-visible, select:focus-visible, summary:focus-visible, a:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+
+    [hidden] { display: none !important; }
+
+    @media (max-width: 900px) {
+      .app { grid-template-columns: 1fr; }
+      .sidebar {
+        position: sticky;
+        top: 0;
+        height: auto;
+        max-height: 100vh;
+        z-index: 2;
+        border-right: 0;
+        border-bottom: 1px solid var(--border);
+      }
+      .menu-toggle { display: block; width: 100%; margin: var(--space-4) 0 var(--space-3); }
+      .nav-links { display: none; }
+      .nav-links.open { display: block; }
+      .main { padding: var(--space-4); }
+      .compare { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to lesson</a>
+<div class="app">
+  <aside class="sidebar">
+    <div class="logo">
+      <strong>Java basics</strong>
+      <div class="logo-sub">A first programming tutor</div>
+      <a class="home-link" href="https://kishorek.github.io/">Back to kishorek.github.io</a>
+    </div>
+    <div class="progress-box">
+      <div class="progress-label" id="progressCount">0 of 14 sections</div>
+      <div class="progress-bar" aria-hidden="true"><div class="progress-fill" id="progressFill"></div></div>
+    </div>
+    <button class="menu-toggle btn secondary" id="menuToggle" type="button" aria-expanded="false" aria-controls="navLinks">Sections</button>
+    <nav class="nav-links" id="navLinks" aria-label="Lessons">
+      <div class="nav-section">Start</div>
+      <button class="nav-btn active" type="button" data-panel="welcome" data-label="How to study">How to study</button>
+      <div class="nav-section">Ideas</div>
+      <button class="nav-btn" type="button" data-panel="what" data-label="What programming is">What programming is</button>
+      <button class="nav-btn" type="button" data-panel="how" data-label="How a program works">How a program works</button>
+      <div class="nav-section">Java tools</div>
+      <button class="nav-btn" type="button" data-panel="syntax" data-label="Java syntax">Java syntax</button>
+      <button class="nav-btn" type="button" data-panel="variables" data-label="Variables and types">Variables and types</button>
+      <button class="nav-btn" type="button" data-panel="operators" data-label="Operators">Operators</button>
+      <button class="nav-btn" type="button" data-panel="io" data-label="Input and output">Input and output</button>
+      <button class="nav-btn" type="button" data-panel="conditions" data-label="Decisions">Decisions</button>
+      <button class="nav-btn" type="button" data-panel="loops" data-label="Loops">Loops</button>
+      <button class="nav-btn" type="button" data-panel="methods" data-label="Methods">Methods</button>
+      <button class="nav-btn" type="button" data-panel="arrays" data-label="Arrays">Arrays</button>
+      <div class="nav-section">Use the tools</div>
+      <button class="nav-btn" type="button" data-panel="solve" data-label="Solve a problem">Solve a problem</button>
+      <button class="nav-btn" type="button" data-panel="project" data-label="Score report">Score report</button>
+      <button class="nav-btn" type="button" data-panel="quiz" data-label="Quiz">Quiz</button>
+    </nav>
+  </aside>
+  <main class="main" id="main" tabindex="-1">
+    <section class="panel active" id="welcome">
+      <h1>How to study this tutor</h1>
+      <p class="lead">You will learn to read and write small Java programs, starting from a single instruction and ending with a score report.</p>
+      <p>No earlier programming class is required. Each new word is explained the first time it appears.</p>
+      <div class="card"><p><strong>Golden rule.</strong> A program is a list of exact steps. The computer follows that list from top to bottom. It does not guess what you meant.</p></div>
+      <h2>What you will be able to do</h2>
+      <ul>
+        <li>Explain what a program is, using input, process, and output.</li>
+        <li>Read the starting lines every Java program needs.</li>
+        <li>Store whole numbers, decimals, yes-or-no values, and text.</li>
+        <li>Add, subtract, multiply, divide, and find a remainder.</li>
+        <li>Print messages and read what a person types.</li>
+        <li>Choose with <code>if</code> and <code>else</code>, and repeat with a loop.</li>
+        <li>Name a reusable action, called a method, and use a row of boxes, called an array.</li>
+        <li>Build one small program that uses all of those tools together.</li>
+      </ul>
+      <h2>How to practice</h2>
+      <ol class="steps">
+        <li>Read the short explanation and the analogy.</li>
+        <li>Read the Java example and the line-by-line notes.</li>
+        <li>Use the practice box. Change a value and watch the result.</li>
+        <li>Answer the check. The page tells you why the answer is right or wrong.</li>
+        <li>Mark the section done when you can explain it out loud.</li>
+        <li>Use Next. The sidebar is your roadmap, and you can jump back any time.</li>
+      </ol>
+      <div class="card"><p><strong>Two kinds of code.</strong> The dark blocks labeled Java are the language you are learning. You could save one as a <code>.java</code> file and run it with a Java compiler. The sidebar, buttons, and boxes are this lesson page. The page is built with HTML, CSS, and JavaScript so you can practice here. You do not need to learn those three to learn Java.</p></div>
+      <div class="card"><p><strong>Tip.</strong> This browser remembers which sections you mark done, on this computer only. A simulator on this page copies Java's rules for the examples. It is not a Java compiler. When a result matters, the page shows the Java and the simulator side by side.</p></div>
+      <h2>Roadmap</h2>
+      <ol class="steps" id="roadmap">
+        <li><button class="text-btn" type="button" data-go="what">What programming is</button><span class="road-state" data-road="what"></span></li>
+        <li><button class="text-btn" type="button" data-go="how">How a program works</button><span class="road-state" data-road="how"></span></li>
+        <li><button class="text-btn" type="button" data-go="syntax">Java syntax</button><span class="road-state" data-road="syntax"></span></li>
+        <li><button class="text-btn" type="button" data-go="variables">Variables and types</button><span class="road-state" data-road="variables"></span></li>
+        <li><button class="text-btn" type="button" data-go="operators">Operators</button><span class="road-state" data-road="operators"></span></li>
+        <li><button class="text-btn" type="button" data-go="io">Input and output</button><span class="road-state" data-road="io"></span></li>
+        <li><button class="text-btn" type="button" data-go="conditions">Decisions</button><span class="road-state" data-road="conditions"></span></li>
+        <li><button class="text-btn" type="button" data-go="loops">Loops</button><span class="road-state" data-road="loops"></span></li>
+        <li><button class="text-btn" type="button" data-go="methods">Methods</button><span class="road-state" data-road="methods"></span></li>
+        <li><button class="text-btn" type="button" data-go="arrays">Arrays</button><span class="road-state" data-road="arrays"></span></li>
+        <li><button class="text-btn" type="button" data-go="solve">Solve a problem</button><span class="road-state" data-road="solve"></span></li>
+        <li><button class="text-btn" type="button" data-go="project">Score report project</button><span class="road-state" data-road="project"></span></li>
+        <li><button class="text-btn" type="button" data-go="quiz">Quiz</button><span class="road-state" data-road="quiz"></span></li>
+      </ol>
+      <p>The same four quiz scores appear in many lessons: 80, 55, 90, and 70. A score of 60 or more passes. Keeping one story makes each new tool easier to see.</p>
+      <div class="mark-done">
+        <input type="checkbox" id="done-welcome" class="done-box" data-section="welcome">
+        <label for="done-welcome">I know how to use this tutor</label>
+      </div>
+      <div class="panel-nav">
+        <span></span>
+        <button class="btn" type="button" data-go="what">Next: What programming is</button>
+      </div>
+    </section>
+    <section class="panel" id="what">
+      <h1>What programming is</h1>
+      <p class="lead">Programming is writing exact instructions that a computer can follow.</p>
+      <p>People can hear a fuzzy request and fill in the gaps. A computer cannot. If a step is missing, or the order is wrong, the result is wrong. That is not the computer being difficult. It is the computer doing exactly what the list says.</p>
+      <div class="card"><p><strong>Analogy.</strong> A recipe is a program for a cook. "Add salt" is too vague, because the cook must guess the amount. "Add 1 teaspoon of salt" is an instruction. A program is a recipe written so carefully that no guessing is left.</p></div>
+      <h2>A first look at Java</h2>
+      <p>Java is one programming language. This is Java. Each line is one instruction. The computer starts at the top.</p>
+      <p>Java:</p>
+<pre><span class="fn">System</span>.out.println(<span class="str">"Boil the water"</span>);
+<span class="fn">System</span>.out.println(<span class="str">"Pour the water over the tea bag"</span>);
+<span class="fn">System</span>.out.println(<span class="str">"Wait two minutes"</span>);</pre>
+      <p>Output:</p>
+      <div class="result-box">Boil the water
+Pour the water over the tea bag
+Wait two minutes</div>
+      <h2>Line by line</h2>
+      <ol>
+        <li><code>System.out.println</code> means "print this, then move to the next line." You will see it in almost every early program.</li>
+        <li>The words in double quotes are text. They print exactly as written.</li>
+        <li>The semicolon ends the instruction. It is the period at the end of the sentence.</li>
+        <li>The next line does not run until the line above it has finished.</li>
+      </ol>
+      <details class="card">
+        <summary>Full Java program</summary>
+        <p>A real file needs a frame around those lines. The syntax lesson explains the frame. This is the whole program:</p>
+<pre><span class="kw">public class</span> <span class="fn">Tea</span> {
+    <span class="kw">public static void</span> main(<span class="fn">String</span>[] args) {
+        <span class="fn">System</span>.out.println(<span class="str">"Boil the water"</span>);
+        <span class="fn">System</span>.out.println(<span class="str">"Pour the water over the tea bag"</span>);
+        <span class="fn">System</span>.out.println(<span class="str">"Wait two minutes"</span>);
+    }
+}</pre>
+      </details>
+      <div class="compare">
+        <div class="card">
+          <h3>Before</h3>
+          <p>Make tea.</p>
+          <p>A person might know what you mean. A computer does not know which steps you intended.</p>
+        </div>
+        <div class="card">
+          <h3>After</h3>
+          <p>Boil the water. Pour it over the tea bag. Wait two minutes.</p>
+          <p>Each step is visible, and the order is part of the instruction.</p>
+        </div>
+      </div>
+      <h2>Try it yourself</h2>
+      <div class="playground">
+        <p>These steps are scrambled. Move them until the tea would actually work. The Java under the list always prints the steps in the current order.</p>
+        <ul class="action-list" id="teaList"></ul>
+        <p>Java for this order:</p>
+        <pre id="teaCode"></pre>
+        <p>Simulator result:</p>
+        <div class="result-box" id="teaResult" aria-live="polite"></div>
+      </div>
+      <div class="card"><p><strong>Mistake.</strong> Beginners write the way they talk to a friend: "make it nice" or "do the usual thing." Those words hide choices. Name the action, the amount, and the order.</p></div>
+      <div class="card"><p><strong>Key takeaway.</strong> A program is an exact list. Order matters, because the computer will not rearrange it for you.</p></div>
+      <div class="card quiz-q" data-why="A program needs an action and an amount. Words like some, better, and seems done leave a guess in the instruction.">
+        <p><strong>Check.</strong> Which instruction can a computer follow without guessing?</p>
+        <button class="opt" type="button" data-correct="false" data-label="Add some salt">Add some salt</button>
+        <button class="opt" type="button" data-correct="true" data-label="Add 1 teaspoon of salt">Add 1 teaspoon of salt</button>
+        <button class="opt" type="button" data-correct="false" data-label="Make it taste better">Make it taste better</button>
+        <button class="opt" type="button" data-correct="false" data-label="Cook until it seems done">Cook until it seems done</button>
+        <div class="feedback" hidden></div>
+      </div>
+      <div class="mark-done">
+        <input type="checkbox" id="done-what" class="done-box" data-section="what">
+        <label for="done-what">I can explain what a program is</label>
+      </div>
+      <div class="panel-nav">
+        <button class="btn secondary" type="button" data-go="welcome">Back: How to study</button>
+        <button class="btn" type="button" data-go="how">Next: How a program works</button>
+      </div>
+    </section>
+
+    <section class="panel" id="how">
+      <h1>How a program works</h1>
+      <p class="lead">Most small programs do three things: take data in, work on it, and send a result out.</p>
+      <p>Those three parts have names. <strong>Input</strong> is data that comes in. <strong>Process</strong> is the work. <strong>Output</strong> is the result that comes out. A program only knows the input you give it. It does not remember the price from a conversation you had away from the keyboard.</p>
+      <div class="card"><p><strong>Analogy.</strong> A cashier receives money (input), subtracts the price (process), and hands you the change (output). If you never say the price, the cashier cannot invent it. Your program has the same limit.</p></div>
+      <h2>Change from a purchase</h2>
+      <p>The sample price is 12 and the amount paid is 20. The work is subtraction.</p>
+      <p>Java, inside <code>main</code>:</p>
+<pre><span class="kw">int</span> price = <span class="num">12</span>;
+<span class="kw">int</span> paid = <span class="num">20</span>;
+<span class="kw">int</span> change = paid - price;
+<span class="fn">System</span>.out.println(change);</pre>
+      <p>Output:</p>
+      <div class="result-box">8</div>
+      <h2>Line by line</h2>
+      <ol>
+        <li><code>int price = 12;</code> stores the whole number 12 in a box labeled <code>price</code>. <code>int</code> means whole number. The next lesson spends more time on boxes.</li>
+        <li><code>int paid = 20;</code> stores 20 in a second box.</li>
+        <li><code>int change = paid - price;</code> subtracts the two stored numbers and stores the answer. This is the process.</li>
+        <li><code>System.out.println(change);</code> prints what is inside <code>change</code>. There are no quotes, so Java prints the number, not the word change.</li>
+      </ol>
+      <div class="flow" aria-label="Input, process, and output">
+        <div class="flow-step">
+          <h3>1. Input</h3>
+          <p>price holds <span id="flowPrice">12</span></p>
+          <p>paid holds <span id="flowPaid">20</span></p>
+        </div>
+        <div class="flow-step">
+          <h3>2. Process</h3>
+          <p>change = paid - price</p>
+          <p id="flowWork">20 - 12</p>
+        </div>
+        <div class="flow-step">
+          <h3>3. Output</h3>
+          <p>print the change</p>
+          <p id="flowOut">8</p>
+        </div>
+      </div>
+      <h2>Try it yourself</h2>
+      <div class="playground">
+        <p>Change the price or the amount paid. The diagram and the printed line update together. Use whole numbers.</p>
+        <div class="fields">
+          <div class="field">
+            <label for="priceInput">Price</label>
+            <input id="priceInput" value="12" inputmode="numeric" autocomplete="off">
+          </div>
+          <div class="field">
+            <label for="paidInput">Amount paid</label>
+            <input id="paidInput" value="20" inputmode="numeric" autocomplete="off">
+          </div>
+        </div>
+        <p>Java for these numbers:</p>
+        <pre id="changeCode"></pre>
+        <p>Simulator result:</p>
+        <div class="result-box" id="changeResult" aria-live="polite"></div>
+      </div>
+      <div class="card"><p><strong>Mistake.</strong> Writing a program that uses a fact you never stored. If the price is only in your head, <code>price</code> does not exist yet. Every fact the process needs must be input, or a number you typed into the program.</p></div>
+      <div class="card"><p><strong>Key takeaway.</strong> Find the input, name the process, and check the output. When a program misbehaves, one of those three is usually the reason.</p></div>
+      <div class="card quiz-q" data-why="The process is the subtraction. 20 minus 12 is 8, and println prints that stored result.">
+        <p><strong>Check.</strong> price is 12 and paid is 20. What is printed by <code>change = paid - price</code>?</p>
+        <button class="opt" type="button" data-correct="false" data-label="12">12</button>
+        <button class="opt" type="button" data-correct="false" data-label="20">20</button>
+        <button class="opt" type="button" data-correct="true" data-label="8">8</button>
+        <button class="opt" type="button" data-correct="false" data-label="32">32</button>
+        <div class="feedback" hidden></div>
+      </div>
+      <div class="mark-done">
+        <input type="checkbox" id="done-how" class="done-box" data-section="how">
+        <label for="done-how">I can point to input, process, and output</label>
+      </div>
+      <div class="panel-nav">
+        <button class="btn secondary" type="button" data-go="what">Back: What programming is</button>
+        <button class="btn" type="button" data-go="syntax">Next: Java syntax</button>
+      </div>
+    </section>
+
+    <section class="panel" id="syntax">
+      <h1>Java syntax</h1>
+      <p class="lead">Syntax is the grammar: the rules for how symbols and words may be arranged.</p>
+      <p>English rejects "Cat the sat" even though the words are familiar. Java rejects a line when a semicolon, quote, brace, or capital letter is in the wrong place. A <strong>compiler</strong> is the checker that translates Java before it can run. If the grammar is wrong, the compiler stops and reports an error. It does not run the program, and it does not fix the line for you.</p>
+      <div class="card"><p><strong>Analogy.</strong> A form with required boxes works the same way. If your name is written on the signature line, the form is rejected. The reader does not hunt through the page to guess which line you meant.</p></div>
+      <h2>The boilerplate frame</h2>
+      <p><strong>Boilerplate</strong> means the same starting lines you wrap around the work. Copy this frame often. Your real steps go where the comment is.</p>
+      <p>Java:</p>
+<pre><span class="kw">public class</span> <span class="fn">Hello</span> {
+    <span class="kw">public static void</span> main(<span class="fn">String</span>[] args) {
+        <span class="cm">// Your steps go here.</span>
+        <span class="fn">System</span>.out.println(<span class="str">"Hello"</span>);
+    }
+}</pre>
+      <p>Output:</p>
+      <div class="result-box">Hello</div>
+      <h2>Line by line</h2>
+      <ol>
+        <li><code>public class Hello</code> names the program Hello. The file must be saved as <code>Hello.java</code>. The capital H must match.</li>
+        <li>The <code>{ }</code> braces group the lines that belong together. Every opening brace needs a closing brace.</li>
+        <li><code>public static void main(String[] args)</code> is the starting point. Java begins there. <code>args</code> can hold extra words typed at startup. You can ignore <code>args</code> for now, but the frame still needs it.</li>
+        <li><code>public</code> means other code is allowed to use this. <code>static</code> means <code>main</code> can start without building an object first. <code>void</code> means <code>main</code> does not hand a value back. Treat these three words as part of the frame until the methods lesson.</li>
+        <li><code>//</code> starts a comment. Java skips the rest of that line. Comments are notes for people.</li>
+        <li><code>System.out.println("Hello");</code> prints Hello and ends with a semicolon.</li>
+      </ol>
+      <div class="card"><p><strong>Tip.</strong> Java cares about capital letters. <code>System</code> and <code>system</code> are different. Text uses double quotes. A comment uses <code>//</code> and is not printed.</p></div>
+      <h2>Before and after</h2>
+      <div class="compare">
+        <div class="card">
+          <h3>Before</h3>
+<pre><span class="fn">System</span>.out.println(<span class="str">"Hello"</span>)</pre>
+          <p>The semicolon is missing, so the compiler rejects the file.</p>
+        </div>
+        <div class="card">
+          <h3>After</h3>
+<pre><span class="fn">System</span>.out.println(<span class="str">"Hello"</span>);</pre>
+          <p>The semicolon ends the statement. This line can compile.</p>
+        </div>
+      </div>
+      <h2>Try it yourself</h2>
+      <div class="playground">
+        <p>Pick a broken program. Read the plain-language reason, then compare it with the fix.</p>
+        <div class="field">
+          <label for="bugPick">Broken program</label>
+          <select id="bugPick">
+            <option value="semi">Missing semicolon</option>
+            <option value="lower">Lowercase string type</option>
+            <option value="quotes">Single quotes around a word</option>
+            <option value="file">Class name does not match the file</option>
+          </select>
+        </div>
+        <div id="bugHost"></div>
+      </div>
+      <div id="bugTemplates" hidden>
+        <div data-bug="semi">
+          <div class="compare">
+            <div class="card"><h3>Before</h3>
+<pre><span class="fn">System</span>.out.println(<span class="str">"Hello"</span>)</pre></div>
+            <div class="card"><h3>After</h3>
+<pre><span class="fn">System</span>.out.println(<span class="str">"Hello"</span>);</pre></div>
+          </div>
+          <p>The compiler expected a semicolon at the end of the print statement. Add it. Do not add a second one later.</p>
+        </div>
+        <div data-bug="lower">
+          <div class="compare">
+            <div class="card"><h3>Before</h3>
+<pre>string name = <span class="str">"Maya"</span>;</pre></div>
+            <div class="card"><h3>After</h3>
+<pre><span class="fn">String</span> name = <span class="str">"Maya"</span>;</pre></div>
+          </div>
+          <p>The text type is <code>String</code> with a capital S. Java has no type named <code>string</code>.</p>
+        </div>
+        <div data-bug="quotes">
+          <div class="compare">
+            <div class="card"><h3>Before</h3>
+<pre><span class="fn">String</span> name = 'Maya';</pre></div>
+            <div class="card"><h3>After</h3>
+<pre><span class="fn">String</span> name = <span class="str">"Maya"</span>;</pre></div>
+          </div>
+          <p>Single quotes are for one character, such as <code>'A'</code>. A word needs double quotes.</p>
+        </div>
+        <div data-bug="file">
+          <div class="compare">
+            <div class="card"><h3>Before</h3>
+<pre><span class="cm">// Saved as Hello.java</span>
+<span class="kw">public class</span> <span class="fn">Goodbye</span> {
+    <span class="kw">public static void</span> main(<span class="fn">String</span>[] args) {
+        <span class="fn">System</span>.out.println(<span class="str">"Hi"</span>);
+    }
+}</pre></div>
+            <div class="card"><h3>After</h3>
+<pre><span class="cm">// Saved as Hello.java</span>
+<span class="kw">public class</span> <span class="fn">Hello</span> {
+    <span class="kw">public static void</span> main(<span class="fn">String</span>[] args) {
+        <span class="fn">System</span>.out.println(<span class="str">"Hi"</span>);
+    }
+}</pre></div>
+          </div>
+          <p>The public class is named Goodbye, but the file is Hello.java. Those names must match, including capitals. Rename the class, or rename the file to Goodbye.java.</p>
+        </div>
+      </div>
+      <div class="card"><p><strong>Exam trap.</strong> A missing semicolon, a lowercase <code>string</code>, single quotes around a word, and a class name that does not match the file are four of the first errors beginners hit. The compiler message names the problem. Read it as a grammar note, not as a verdict that you cannot program.</p></div>
+      <div class="card"><p><strong>Key takeaway.</strong> Statements end with semicolons, groups use braces, text uses double quotes, and the public class name matches the file name.</p></div>
+      <div class="card quiz-q" data-why="A public class must use the same name as its file, including capital letters. Hello and hello are different names in Java.">
+        <p><strong>Check.</strong> The file is saved as Hello.java. Which class name will compile?</p>
+        <button class="opt" type="button" data-correct="false" data-label="hello">hello</button>
+        <button class="opt" type="button" data-correct="false" data-label="Goodbye">Goodbye</button>
+        <button class="opt" type="button" data-correct="true" data-label="Hello">Hello</button>
+        <button class="opt" type="button" data-correct="false" data-label="Main">Main</button>
+        <div class="feedback" hidden></div>
+      </div>
+      <div class="mark-done">
+        <input type="checkbox" id="done-syntax" class="done-box" data-section="syntax">
+        <label for="done-syntax">I can read a small Java class</label>
+      </div>
+      <div class="panel-nav">
+        <button class="btn secondary" type="button" data-go="how">Back: How a program works</button>
+        <button class="btn" type="button" data-go="variables">Next: Variables and types</button>
+      </div>
+    </section>
+    <section class="panel" id="variables">
+      <h1>Variables and types</h1>
+      <p class="lead">A variable is a labeled box that holds one value. The type says what kind of value the box may hold.</p>
+      <p>You create a box with a <strong>declaration</strong>: the type, then the name, then <code>=</code>, then the value. The word <strong>assign</strong> means "put this value into the box." A later assignment replaces what was inside. It does not create a second box.</p>
+      <div class="card"><p><strong>Analogy.</strong> A closet has labeled boxes. The label is the variable name. The kind of box is the type: a tray for whole numbers, a jar for decimals, a switch for yes or no, a folder for text. Java refuses to put text into a whole-number tray.</p></div>
+      <h2>Maya's quiz facts</h2>
+      <p>Java, inside <code>main</code>:</p>
+<pre><span class="fn">String</span> name = <span class="str">"Maya"</span>;
+<span class="kw">int</span> score = <span class="num">80</span>;
+<span class="kw">double</span> average = <span class="num">73.75</span>;
+<span class="kw">boolean</span> passed = <span class="kw">true</span>;
+<span class="kw">char</span> grade = <span class="str">'B'</span>;
+<span class="fn">System</span>.out.println(name);
+<span class="fn">System</span>.out.println(score);</pre>
+      <p>Output:</p>
+      <div class="result-box">Maya
+80</div>
+      <div class="box-row" aria-label="Five variable boxes">
+        <div class="var-box"><div class="label">name</div><div class="type">String</div><div class="value">"Maya"</div></div>
+        <div class="var-box"><div class="label">score</div><div class="type">int</div><div class="value">80</div></div>
+        <div class="var-box"><div class="label">average</div><div class="type">double</div><div class="value">73.75</div></div>
+        <div class="var-box"><div class="label">passed</div><div class="type">boolean</div><div class="value">true</div></div>
+        <div class="var-box"><div class="label">grade</div><div class="type">char</div><div class="value">'B'</div></div>
+      </div>
+      <h2>Line by line</h2>
+      <ol>
+        <li><code>String name = "Maya";</code> creates a text box. The type starts with a capital S. The text uses double quotes.</li>
+        <li><code>int score = 80;</code> creates a whole-number box. No quotes and no decimal point.</li>
+        <li><code>double average = 73.75;</code> creates a decimal box. A <strong>double</strong> can hold a fraction.</li>
+        <li><code>boolean passed = true;</code> creates a yes-or-no box. A <strong>boolean</strong> holds only <code>true</code> or <code>false</code>, in lowercase.</li>
+        <li><code>char grade = 'B';</code> holds exactly one character, in single quotes.</li>
+        <li>The two print lines read the boxes. <code>name</code> has no quotes here, so Java prints the contents, Maya, not the label.</li>
+      </ol>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Type</th><th>Holds</th><th>Example</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>int</code></td><td>Whole numbers</td><td><code>80</code></td></tr>
+            <tr><td><code>double</code></td><td>Decimals</td><td><code>73.75</code></td></tr>
+            <tr><td><code>boolean</code></td><td>true or false</td><td><code>true</code></td></tr>
+            <tr><td><code>char</code></td><td>One character</td><td><code>'B'</code></td></tr>
+            <tr><td><code>String</code></td><td>Text</td><td><code>"Maya"</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="card"><p><strong>Tip.</strong> Start a variable name with a lowercase letter, then use letters or digits: <code>scoreOne</code>. No spaces. Class names, like <code>Hello</code>, usually start with a capital. Variable names usually do not.</p></div>
+      <h2>Try it yourself</h2>
+      <div class="playground">
+        <p>Build one box. If the value does not fit the type, the page says why. Try your age as an <code>int</code>, then try your name as a <code>String</code>.</p>
+        <div class="fields">
+          <div class="field">
+            <label for="varName">Name</label>
+            <input id="varName" value="score" autocomplete="off">
+          </div>
+          <div class="field">
+            <label for="varType">Type</label>
+            <select id="varType">
+              <option value="int">int</option>
+              <option value="double">double</option>
+              <option value="boolean">boolean</option>
+              <option value="char">char</option>
+              <option value="String">String</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="varValue">Value</label>
+            <input id="varValue" value="80" autocomplete="off">
+          </div>
+        </div>
+        <div class="box-row" id="varBox"></div>
+        <p>Java:</p>
+        <pre id="varLine"></pre>
+        <div class="result-box" id="varMsg" aria-live="polite"></div>
+      </div>
+      <div class="card"><p><strong>Mistake.</strong> Using a box before you store a value, or writing <code>string</code> in lowercase. Local variables in <code>main</code> must be assigned before they are read. The type <code>String</code> always has a capital S.</p></div>
+      <div class="card"><p><strong>Key takeaway.</strong> Type, name, value. The type is the kind of box. The name is the label. <code>=</code> puts a fitting value inside.</p></div>
+      <div class="card quiz-q" data-why="int stores a whole number. 73.75 needs double, true needs boolean, and quoted Maya needs String.">
+        <p><strong>Check.</strong> Which value can be stored in an <code>int</code> variable?</p>
+        <button class="opt" type="button" data-correct="false" data-label="73.75">73.75</button>
+        <button class="opt" type="button" data-correct="false" data-label="true">true</button>
+        <button class="opt" type="button" data-correct="false" data-label="&quot;Maya&quot;">"Maya"</button>
+        <button class="opt" type="button" data-correct="true" data-label="80">80</button>
+        <div class="feedback" hidden></div>
+      </div>
+      <div class="mark-done">
+        <input type="checkbox" id="done-variables" class="done-box" data-section="variables">
+        <label for="done-variables">I can declare int, double, boolean, and String</label>
+      </div>
+      <div class="panel-nav">
+        <button class="btn secondary" type="button" data-go="syntax">Back: Java syntax</button>
+        <button class="btn" type="button" data-go="operators">Next: Operators</button>
+      </div>
+    </section>
+
+    <section class="panel" id="operators">
+      <h1>Operators</h1>
+      <p class="lead">An operator is a symbol that does a job on values, such as adding them or asking whether they are equal.</p>
+      <p><code>=</code> is not a question. It stores the value on the right into the box on the left. <code>==</code> is the question "are these equal?" Mixing them up is one of the most common early bugs.</p>
+      <div class="card"><p><strong>Analogy.</strong> Arithmetic operators are calculator buttons. Comparison operators are yes-or-no questions. The remainder operator <code>%</code> is what is left after you share cookies evenly: 10 cookies and 3 friends means each friend gets 3, and 1 cookie remains.</p></div>
+      <h2>Sharing 10 cookies</h2>
+      <p>Java, inside <code>main</code>:</p>
+<pre><span class="kw">int</span> cookies = <span class="num">10</span>;
+<span class="kw">int</span> friends = <span class="num">3</span>;
+<span class="kw">int</span> each = cookies / friends;
+<span class="kw">int</span> leftover = cookies % friends;
+<span class="fn">System</span>.out.println(each);
+<span class="fn">System</span>.out.println(leftover);</pre>
+      <p>Output:</p>
+      <div class="result-box">3
+1</div>
+      <h2>Line by line</h2>
+      <ol>
+        <li><code>int cookies = 10;</code> and <code>int friends = 3;</code> store the two inputs.</li>
+        <li><code>cookies / friends</code> divides. Both values are <code>int</code>, so Java keeps the whole number 3 and cuts off the fraction.</li>
+        <li><code>cookies % friends</code> is the remainder, 1. <code>%</code> is pronounced "mod."</li>
+        <li>The prints show 3, then 1. Nothing in the program rounds 3.333 up to 4.</li>
+      </ol>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Operator</th><th>Meaning</th><th>Example</th><th>Result</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>+</code></td><td>Add</td><td><code>2 + 3</code></td><td>5</td></tr>
+            <tr><td><code>-</code></td><td>Subtract</td><td><code>20 - 12</code></td><td>8</td></tr>
+            <tr><td><code>*</code></td><td>Multiply</td><td><code>4 * 3</code></td><td>12</td></tr>
+            <tr><td><code>/</code></td><td>Divide</td><td><code>7 / 2</code> as ints</td><td>3</td></tr>
+            <tr><td><code>%</code></td><td>Remainder</td><td><code>10 % 3</code></td><td>1</td></tr>
+            <tr><td><code>==</code></td><td>Equal?</td><td><code>5 == 5</code></td><td>true</td></tr>
+            <tr><td><code>!=</code></td><td>Not equal?</td><td><code>5 != 3</code></td><td>true</td></tr>
+            <tr><td><code>&gt;</code> <code>&lt;</code> <code>&gt;=</code> <code>&lt;=</code></td><td>Compare size</td><td><code>72 &gt;= 60</code></td><td>true</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="compare">
+        <div class="card">
+          <h3>Before</h3>
+<pre><span class="kw">int</span> score = <span class="num">60</span>;
+<span class="kw">if</span> (score = <span class="num">70</span>) { }</pre>
+          <p><code>=</code> tries to store 70. A decision needs a yes-or-no question, so this does not compile.</p>
+        </div>
+        <div class="card">
+          <h3>After</h3>
+<pre><span class="kw">int</span> score = <span class="num">60</span>;
+<span class="kw">if</span> (score == <span class="num">70</span>) { }</pre>
+          <p><code>==</code> asks the question. Here the answer is false, because 60 and 70 differ.</p>
+        </div>
+      </div>
+      <h2>Try it yourself</h2>
+      <div class="playground">
+        <p>Use whole numbers first and divide. Then switch to decimals and divide the same pair. The results differ on purpose.</p>
+        <div class="fields">
+          <div class="field">
+            <label for="opA">Left number</label>
+            <input id="opA" value="10" autocomplete="off">
+          </div>
+          <div class="field">
+            <label for="opOp">Operator</label>
+            <select id="opOp">
+              <option value="+">+ add</option>
+              <option value="-">- subtract</option>
+              <option value="*">* multiply</option>
+              <option value="/" selected>/ divide</option>
+              <option value="%">% remainder</option>
+              <option value="==">== equal</option>
+              <option value="!=">!= not equal</option>
+              <option value=">">&gt; greater</option>
+              <option value="&lt;">&lt; less</option>
+              <option value=">=">&gt;= at least</option>
+              <option value="&lt;=">&lt;= at most</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="opB">Right number</label>
+            <input id="opB" value="3" autocomplete="off">
+          </div>
+          <div class="field">
+            <label for="opMode">Number kind</label>
+            <select id="opMode">
+              <option value="int">Whole numbers (int)</option>
+              <option value="double">Decimals (double)</option>
+            </select>
+          </div>
+        </div>
+        <p>Simulator result:</p>
+        <div class="result-box" id="opOut" aria-live="polite"></div>
+      </div>
+      <div class="playground">
+        <p>Java does <code>*</code> and <code>/</code> before <code>+</code> and <code>-</code>. Parentheses run first. Change the three whole numbers and compare the two expressions.</p>
+        <div class="fields">
+          <div class="field"><label for="precX">x</label><input id="precX" value="2" autocomplete="off"></div>
+          <div class="field"><label for="precY">y</label><input id="precY" value="3" autocomplete="off"></div>
+          <div class="field"><label for="precZ">z</label><input id="precZ" value="4" autocomplete="off"></div>
+        </div>
+        <div class="result-box" id="precOut" aria-live="polite"></div>
+      </div>
+      <div class="playground">
+        <p><code>&amp;&amp;</code> means and. Both sides must be true. <code>||</code> means or. One true side is enough. A student passes this rule when the score is at least 60 and absences are under 3.</p>
+        <div class="fields">
+          <div class="field"><label for="logicScore">Score</label><input id="logicScore" value="72" autocomplete="off"></div>
+          <div class="field"><label for="logicMiss">Absences</label><input id="logicMiss" value="1" autocomplete="off"></div>
+        </div>
+        <p>Java:</p>
+<pre><span class="kw">if</span> (score &gt;= <span class="num">60</span> &amp;&amp; absences &lt; <span class="num">3</span>) {
+    <span class="fn">System</span>.out.println(<span class="str">"Pass"</span>);
+}</pre>
+        <div class="result-box" id="logicOut" aria-live="polite"></div>
+      </div>
+      <div class="card"><p><strong>Exam trap.</strong> <code>7 / 2</code> is 3 when both numbers are <code>int</code>, not 3.5. The fraction is cut off, not rounded. <code>7.0 / 2.0</code> keeps a decimal. Also, <code>=</code> stores a value and <code>==</code> compares.</p></div>
+      <div class="card"><p><strong>Key takeaway.</strong> <code>/</code> and <code>%</code> answer different questions. Integer division drops the fraction. <code>=</code> stores. <code>==</code> asks.</p></div>
+      <div class="card quiz-q" data-why="The % operator is the remainder. 3 fits into 10 three times, and 1 is left over.">
+        <p><strong>Check.</strong> What is <code>10 % 3</code>?</p>
+        <button class="opt" type="button" data-correct="false" data-label="3">3</button>
+        <button class="opt" type="button" data-correct="true" data-label="1">1</button>
+        <button class="opt" type="button" data-correct="false" data-label="0">0</button>
+        <button class="opt" type="button" data-correct="false" data-label="30">30</button>
+        <div class="feedback" hidden></div>
+      </div>
+      <div class="mark-done">
+        <input type="checkbox" id="done-operators" class="done-box" data-section="operators">
+        <label for="done-operators">I can predict + - * / % and comparisons</label>
+      </div>
+      <div class="panel-nav">
+        <button class="btn secondary" type="button" data-go="variables">Back: Variables and types</button>
+        <button class="btn" type="button" data-go="io">Next: Input and output</button>
+      </div>
+    </section>
+
+    <section class="panel" id="io">
+      <h1>Input and output</h1>
+      <p class="lead">Output is what the program prints. Input is what a person types while the program is running.</p>
+      <p><code>System.out.println</code> prints and then moves to the next line. <code>System.out.print</code> prints and stays on the same line. To listen to the keyboard, Java uses a <strong>Scanner</strong>. You create one, then ask it for a line of text or a whole number.</p>
+      <div class="card"><p><strong>Analogy.</strong> <code>println</code> is speaking a sentence and taking a breath. <code>print</code> is speaking and staying on the same line so the person can answer beside the question. A Scanner is the program's ears.</p></div>
+      <h2>Ask for a name</h2>
+      <p>Java:</p>
+<pre><span class="kw">import</span> java.util.Scanner;
+
+<span class="kw">public class</span> <span class="fn">AskName</span> {
+    <span class="kw">public static void</span> main(<span class="fn">String</span>[] args) {
+        Scanner input = <span class="kw">new</span> Scanner(<span class="fn">System</span>.in);
+        <span class="fn">System</span>.out.print(<span class="str">"Your name: "</span>);
+        <span class="fn">String</span> name = input.nextLine();
+        <span class="fn">System</span>.out.println(<span class="str">"Hello, "</span> + name);
+        input.close();
+    }
+}</pre>
+      <p>If the person types Maya, the output is:</p>
+      <div class="result-box">Your name: Maya
+Hello, Maya</div>
+      <h2>Line by line</h2>
+      <ol>
+        <li><code>import java.util.Scanner;</code> tells Java where the Scanner type lives. Import lines go above the class.</li>
+        <li><code>Scanner input = new Scanner(System.in);</code> builds a listener named <code>input</code>. <code>System.in</code> means the keyboard. <code>new</code> builds it.</li>
+        <li><code>print</code>, not <code>println</code>, shows the question and leaves the cursor on that line.</li>
+        <li><code>nextLine()</code> waits until Enter, then returns the whole line, spaces included. The parentheses mean "do this action now."</li>
+        <li><code>"Hello, " + name</code> joins text. The <code>+</code> operator adds numbers, and it also joins text when either side is text.</li>
+        <li><code>input.close();</code> says you are done listening. In a one-read practice program, this is the usual last step.</li>
+      </ol>
+      <div class="compare">
+        <div class="card">
+          <h3>print</h3>
+<pre><span class="fn">System</span>.out.print(<span class="str">"Hi"</span>);
+<span class="fn">System</span>.out.print(<span class="str">"Maya"</span>);</pre>
+          <p>Output: <code>HiMaya</code> on one line.</p>
+        </div>
+        <div class="card">
+          <h3>println</h3>
+<pre><span class="fn">System</span>.out.println(<span class="str">"Hi"</span>);
+<span class="fn">System</span>.out.println(<span class="str">"Maya"</span>);</pre>
+          <p>Output: Hi, then Maya on the next line.</p>
+        </div>
+      </div>
+      <h2>Try it yourself</h2>
+      <div class="playground">
+        <p>Type a full name, including a space, and a whole-number age. <code>nextLine</code> keeps both names. This page plays the role of Scanner.</p>
+        <div class="fields">
+          <div class="field">
+            <label for="ioName">Name typed by the person</label>
+            <input id="ioName" value="Maya" autocomplete="off">
+          </div>
+          <div class="field">
+            <label for="ioAge">Age typed next</label>
+            <input id="ioAge" value="15" inputmode="numeric" autocomplete="off">
+          </div>
+        </div>
+        <p>Java that reads those two answers:</p>
+<pre>Scanner input = <span class="kw">new</span> Scanner(<span class="fn">System</span>.in);
+<span class="fn">System</span>.out.print(<span class="str">"Your name: "</span>);
+<span class="fn">String</span> name = input.nextLine();
+<span class="kw">int</span> age = input.nextInt();
+<span class="fn">System</span>.out.println(<span class="str">"Hello, "</span> + name);
+<span class="fn">System</span>.out.println(<span class="str">"You are "</span> + age + <span class="str">" years old."</span>);</pre>
+        <p>Simulator result:</p>
+        <div class="result-box" id="ioOut" aria-live="polite"></div>
+      </div>
+      <div class="card"><p><strong>Exam trap.</strong> <code>nextInt()</code> reads the digits and stops before the Enter key. If the next listen is <code>nextLine()</code>, that call can swallow the leftover Enter and return an empty line. After <code>nextInt()</code>, call an extra <code>nextLine()</code> to clear that leftover before you read real text.</p></div>
+      <details class="card">
+        <summary>The leftover Enter, in code</summary>
+<pre><span class="kw">int</span> age = input.nextInt();
+input.nextLine(); <span class="cm">// clear the leftover Enter</span>
+<span class="fn">String</span> city = input.nextLine();</pre>
+        <p>Skip the extra <code>nextLine()</code> and <code>city</code> may become an empty string even though the person typed a city.</p>
+      </details>
+      <div class="card"><p><strong>Key takeaway.</strong> <code>println</code> speaks and moves down. <code>nextLine</code> hears a whole line. <code>nextInt</code> hears a whole number. Joining text uses <code>+</code>.</p></div>
+      <div class="card quiz-q" data-why="nextLine waits for Enter and returns the whole line, spaces included. nextInt reads a whole number only. println writes output. main is the starting point.">
+        <p><strong>Check.</strong> Which action reads a full line of text, including spaces?</p>
+        <button class="opt" type="button" data-correct="false" data-label="nextInt">nextInt</button>
+        <button class="opt" type="button" data-correct="true" data-label="nextLine">nextLine</button>
+        <button class="opt" type="button" data-correct="false" data-label="println">println</button>
+        <button class="opt" type="button" data-correct="false" data-label="main">main</button>
+        <div class="feedback" hidden></div>
+      </div>
+      <div class="mark-done">
+        <input type="checkbox" id="done-io" class="done-box" data-section="io">
+        <label for="done-io">I can read input and print output</label>
+      </div>
+      <div class="panel-nav">
+        <button class="btn secondary" type="button" data-go="operators">Back: Operators</button>
+        <button class="btn" type="button" data-go="conditions">Next: Decisions</button>
+      </div>
+    </section>
+    <section class="panel" id="conditions">
+      <h1>Decisions</h1>
+      <p class="lead"><code>if</code> runs a group of lines only when a yes-or-no test is true. <code>else</code> runs when that test is false.</p>
+      <p>The test goes in parentheses and must be a boolean: true or false. Comparison operators such as <code>&gt;=</code> produce that boolean. You can chain more tests with <code>else if</code>. Java checks them from top to bottom and runs only the first match.</p>
+      <div class="card"><p><strong>Analogy.</strong> A decision is a fork in a path. The sign says "score at least 60." If the sign is true, you take the Pass path. If it is false, you take the other path. You do not walk both paths.</p></div>
+      <h2>Pass or try again</h2>
+      <p>Java, inside <code>main</code>:</p>
+<pre><span class="kw">int</span> score = <span class="num">72</span>;
+<span class="kw">if</span> (score &gt;= <span class="num">60</span>) {
+    <span class="fn">System</span>.out.println(<span class="str">"Pass"</span>);
+} <span class="kw">else</span> {
+    <span class="fn">System</span>.out.println(<span class="str">"Try again"</span>);
+}</pre>
+      <p>Output:</p>
+      <div class="result-box">Pass</div>
+      <h2>Line by line</h2>
+      <ol>
+        <li><code>int score = 72;</code> stores the input.</li>
+        <li><code>if (score &gt;= 60)</code> asks the question. 72 &gt;= 60 is true. There is no semicolon here. The brace group is the body.</li>
+        <li>Because the test is true, Java prints Pass and skips <code>else</code>.</li>
+        <li>If the score were 59, the test would be false and Java would print Try again instead.</li>
+      </ol>
+      <h2>A letter-grade chain</h2>
+      <p>Java, inside <code>main</code>, for the same score 72:</p>
+<pre><span class="kw">if</span> (score &gt;= <span class="num">90</span>) {
+    <span class="fn">System</span>.out.println(<span class="str">"A"</span>);
+} <span class="kw">else if</span> (score &gt;= <span class="num">80</span>) {
+    <span class="fn">System</span>.out.println(<span class="str">"B"</span>);
+} <span class="kw">else if</span> (score &gt;= <span class="num">70</span>) {
+    <span class="fn">System</span>.out.println(<span class="str">"C"</span>);
+} <span class="kw">else if</span> (score &gt;= <span class="num">60</span>) {
+    <span class="fn">System</span>.out.println(<span class="str">"D"</span>);
+} <span class="kw">else</span> {
+    <span class="fn">System</span>.out.println(<span class="str">"F"</span>);
+}</pre>
+      <p>Output:</p>
+      <div class="result-box">C</div>
+      <p>72 fails the A test and the B test. It passes the C test, so Java prints C and does not look at D or F.</p>
+      <div class="compare">
+        <div class="card">
+          <h3>Before</h3>
+<pre><span class="kw">if</span> (score &gt;= <span class="num">60</span>); {
+    <span class="fn">System</span>.out.println(<span class="str">"Pass"</span>);
+}</pre>
+          <p>The semicolon ends the <code>if</code> immediately. The print is no longer inside the decision, so it runs even when the score fails.</p>
+        </div>
+        <div class="card">
+          <h3>After</h3>
+<pre><span class="kw">if</span> (score &gt;= <span class="num">60</span>) {
+    <span class="fn">System</span>.out.println(<span class="str">"Pass"</span>);
+}</pre>
+          <p>The brace group belongs to the <code>if</code>. Pass prints only when the test is true.</p>
+        </div>
+      </div>
+      <h2>Try it yourself</h2>
+      <div class="playground">
+        <p>Type a whole-number score. Read which tests fail, which one matches, and what would print.</p>
+        <div class="field">
+          <label for="gradeScore">Score</label>
+          <input id="gradeScore" value="72" inputmode="numeric" autocomplete="off">
+        </div>
+        <div class="flow" id="gradeFlow"></div>
+        <p>Simulator result:</p>
+        <div class="result-box" id="gradeOut" aria-live="polite"></div>
+      </div>
+      <div class="card"><p><strong>Exam trap.</strong> A semicolon right after <code>if (score &gt;= 60)</code> closes the decision before the braces. The lines you meant to protect then run every time. Also compare numbers with <code>==</code>, never with a single <code>=</code>.</p></div>
+      <div class="card"><p><strong>Key takeaway.</strong> <code>if</code> takes the true path. <code>else</code> takes the false path. <code>else if</code> tries the next question only when earlier questions were false.</p></div>
+      <div class="card quiz-q" data-why="59 >= 60 is false, so Java skips the if body and runs the else body.">
+        <p><strong>Check.</strong> score is 59. The test is <code>score &gt;= 60</code>. What runs?</p>
+        <button class="opt" type="button" data-correct="false" data-label="The if branch">The if branch</button>
+        <button class="opt" type="button" data-correct="true" data-label="The else branch">The else branch</button>
+        <button class="opt" type="button" data-correct="false" data-label="Both branches">Both branches</button>
+        <button class="opt" type="button" data-correct="false" data-label="main starts again">main starts again</button>
+        <div class="feedback" hidden></div>
+      </div>
+      <div class="mark-done">
+        <input type="checkbox" id="done-conditions" class="done-box" data-section="conditions">
+        <label for="done-conditions">I can choose if, else if, and else</label>
+      </div>
+      <div class="panel-nav">
+        <button class="btn secondary" type="button" data-go="io">Back: Input and output</button>
+        <button class="btn" type="button" data-go="loops">Next: Loops</button>
+      </div>
+    </section>
+
+    <section class="panel" id="loops">
+      <h1>Loops</h1>
+      <p class="lead">A loop repeats a group of lines while a test stays true.</p>
+      <p>Use a <code>for</code> loop when you can count the repeats. Use a <code>while</code> loop when you should keep going until a situation changes. Both need a test that can eventually become false. Otherwise the program repeats forever.</p>
+      <div class="card"><p><strong>Analogy.</strong> "Run 3 laps" is a <code>for</code> loop: you know the count before you start. "Stir until the sauce thickens" is a <code>while</code> loop: you check the sauce, stir, and check again. If you never look at the sauce, you would stir forever.</p></div>
+      <h2>Three laps</h2>
+      <p>Java, inside <code>main</code>:</p>
+<pre><span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">1</span>; i &lt;= <span class="num">3</span>; i++) {
+    <span class="fn">System</span>.out.println(<span class="str">"Lap "</span> + i);
+}</pre>
+      <p>Output:</p>
+      <div class="result-box">Lap 1
+Lap 2
+Lap 3</div>
+      <h2>Line by line</h2>
+      <ol>
+        <li><code>int i = 1</code> runs once, before the first lap. <code>i</code> is the counter.</li>
+        <li><code>i &lt;= 3</code> is checked before every lap. When it is false, the loop stops.</li>
+        <li>The body prints <code>Lap</code> joined to the current number.</li>
+        <li><code>i++</code> means <code>i = i + 1</code>. It runs after the body, then Java checks the test again.</li>
+        <li>So <code>i</code> becomes 1, 2, and 3. When <code>i</code> becomes 4, <code>4 &lt;= 3</code> is false and nothing more prints.</li>
+      </ol>
+      <div class="compare">
+        <div class="card">
+          <h3>for, when you can count</h3>
+<pre><span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">1</span>; i &lt;= <span class="num">3</span>; i++) {
+    <span class="fn">System</span>.out.println(<span class="str">"Lap "</span> + i);
+}</pre>
+        </div>
+        <div class="card">
+          <h3>while, same three laps</h3>
+<pre><span class="kw">int</span> i = <span class="num">1</span>;
+<span class="kw">while</span> (i &lt;= <span class="num">3</span>) {
+    <span class="fn">System</span>.out.println(<span class="str">"Lap "</span> + i);
+    i++;
+}</pre>
+        </div>
+      </div>
+      <p>Both print Lap 1, Lap 2, and Lap 3. The <code>while</code> version shows the counter, the test, and the <code>i++</code> as separate lines. The <code>for</code> version packs those three into the header.</p>
+      <h2>Try it yourself</h2>
+      <div class="playground">
+        <p>Set the lap count from 1 to 6. The last row is the check that stops the loop. That row prints nothing.</p>
+        <div class="field">
+          <label for="lapCount">How many laps? The test is i &lt;= this number</label>
+          <input id="lapCount" value="3" inputmode="numeric" autocomplete="off">
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>i at the check</th><th>Is i &lt;= laps?</th><th>What prints</th><th>i after i++</th></tr>
+            </thead>
+            <tbody id="lapBody"></tbody>
+          </table>
+        </div>
+        <div class="result-box" id="lapOut" aria-live="polite"></div>
+      </div>
+      <div class="card"><p><strong>Exam trap.</strong> <code>i &lt;= 3</code> includes 3. <code>i &lt; 3</code> stops before 3, so a counter that starts at 1 prints only Lap 1 and Lap 2. The other trap is a <code>while</code> that never changes <code>i</code>. The test stays true, and the program never reaches the next line after the loop.</p></div>
+      <details class="card">
+        <summary>A loop that never stops</summary>
+<pre><span class="kw">int</span> i = <span class="num">1</span>;
+<span class="kw">while</span> (i &lt;= <span class="num">3</span>) {
+    <span class="fn">System</span>.out.println(<span class="str">"Lap "</span> + i);
+}</pre>
+        <p><code>i</code> stays 1, so <code>i &lt;= 3</code> stays true. Add <code>i++</code> inside the braces, the way the working <code>while</code> example does.</p>
+      </details>
+      <div class="card"><p><strong>Key takeaway.</strong> A counted loop needs a start, a test, and a change. If the change is missing, or the test can never fail, the loop does not end.</p></div>
+      <div class="card quiz-q" data-why="i becomes 1, then 2, then 3. Each of those values passes i <= 3. When i becomes 4, the test fails and the loop stops.">
+        <p><strong>Check.</strong> How many lines does <code>for (int i = 1; i &lt;= 3; i++)</code> print?</p>
+        <button class="opt" type="button" data-correct="false" data-label="2">2</button>
+        <button class="opt" type="button" data-correct="true" data-label="3">3</button>
+        <button class="opt" type="button" data-correct="false" data-label="4">4</button>
+        <button class="opt" type="button" data-correct="false" data-label="The loop never stops">The loop never stops</button>
+        <div class="feedback" hidden></div>
+      </div>
+      <div class="mark-done">
+        <input type="checkbox" id="done-loops" class="done-box" data-section="loops">
+        <label for="done-loops">I can trace a for loop</label>
+      </div>
+      <div class="panel-nav">
+        <button class="btn secondary" type="button" data-go="conditions">Back: Decisions</button>
+        <button class="btn" type="button" data-go="methods">Next: Methods</button>
+      </div>
+    </section>
+
+    <section class="panel" id="methods">
+      <h1>Methods</h1>
+      <p class="lead">A method is a named action you can run again by calling its name.</p>
+      <p>You have already called methods. <code>println</code> and <code>nextLine</code> are methods other people wrote. A <strong>call</strong> is the moment you use the name, usually with parentheses. Now you will write your own.</p>
+      <p>A <strong>parameter</strong> is a box in the method's definition, waiting for a value. An <strong>argument</strong> is the value you hand in at the call. <code>return</code> sends a value back to the caller and leaves the method. <code>void</code> means "this method does not send a value back."</p>
+      <div class="card"><p><strong>Analogy.</strong> A coffee-machine button is a method. "Beans" and "water" printed on the machine are parameters. The beans you insert are arguments. The cup that comes out is the return value. Printing a message is like the machine beeping. The beep is not the cup. If you needed the cup, a beep is not enough.</p></div>
+      <h2>Add two scores</h2>
+      <p>Java:</p>
+<pre><span class="kw">public class</span> <span class="fn">Adder</span> {
+    <span class="kw">public static int</span> add(<span class="kw">int</span> a, <span class="kw">int</span> b) {
+        <span class="kw">return</span> a + b;
+    }
+
+    <span class="kw">public static void</span> main(<span class="fn">String</span>[] args) {
+        <span class="kw">int</span> total = add(<span class="num">80</span>, <span class="num">55</span>);
+        <span class="fn">System</span>.out.println(total);
+    }
+}</pre>
+      <p>Output:</p>
+      <div class="result-box">135</div>
+      <h2>Line by line</h2>
+      <ol>
+        <li><code>public static int add(int a, int b)</code> defines a method named <code>add</code>. It promises to return an <code>int</code>. <code>a</code> and <code>b</code> are parameters.</li>
+        <li><code>return a + b;</code> adds the two numbers and hands the sum back.</li>
+        <li><code>main</code> still starts the program. Defining <code>add</code> does not run it.</li>
+        <li><code>add(80, 55)</code> calls the method. 80 and 55 are the arguments. They are copied into <code>a</code> and <code>b</code>.</li>
+        <li><code>int total = ...</code> stores the returned 135. Then <code>println</code> prints that stored value.</li>
+      </ol>
+      <div class="compare">
+        <div class="card">
+          <h3>Before</h3>
+<pre><span class="kw">public static int</span> add(<span class="kw">int</span> a, <span class="kw">int</span> b) {
+    <span class="fn">System</span>.out.println(a + b);
+}</pre>
+          <p>The method promised an <code>int</code> and did not return one. Printing is not returning. This file does not compile.</p>
+        </div>
+        <div class="card">
+          <h3>After</h3>
+<pre><span class="kw">public static int</span> add(<span class="kw">int</span> a, <span class="kw">int</span> b) {
+    <span class="kw">return</span> a + b;
+}</pre>
+          <p>The caller can store the sum. Print later, in <code>main</code>, if a person needs to see it.</p>
+        </div>
+      </div>
+      <h2>Try it yourself</h2>
+      <div class="playground">
+        <p>Call <code>add</code> with two whole numbers. The return value is what <code>main</code> receives. The method does not print by itself.</p>
+        <div class="fields">
+          <div class="field"><label for="addA">First argument</label><input id="addA" value="80" autocomplete="off"></div>
+          <div class="field"><label for="addB">Second argument</label><input id="addB" value="55" autocomplete="off"></div>
+        </div>
+        <p>Java call:</p>
+        <pre id="addCode"></pre>
+        <p>Simulator result:</p>
+        <div class="result-box" id="addOut" aria-live="polite"></div>
+      </div>
+      <div class="card"><p><strong>Exam trap.</strong> To compare text, call <code>equals</code>. <code>==</code> on two strings asks whether they are the same object, not whether the letters match. Beginners should write <code>name.equals("Maya")</code>.</p></div>
+      <p>Java, inside <code>main</code>:</p>
+<pre><span class="fn">String</span> name = <span class="str">"Maya"</span>;
+<span class="kw">if</span> (name.equals(<span class="str">"Maya"</span>)) {
+    <span class="fn">System</span>.out.println(<span class="str">"Hi Maya"</span>);
+}</pre>
+      <p><code>equals</code> is a method the String type already has. It returns <code>true</code> or <code>false</code>. Here it returns true, so the program prints Hi Maya.</p>
+      <div class="card"><p><strong>Mistake.</strong> Forgetting <code>return</code> in a method that promised a value, or printing inside the method and expecting <code>main</code> to receive that printed number. The caller only receives what you return.</p></div>
+      <div class="card"><p><strong>Key takeaway.</strong> A method packages steps under a name. Arguments go in. <code>return</code> sends one value back. <code>void</code> sends nothing back.</p></div>
+      <div class="card quiz-q" data-why="80 and 55 are the arguments. add returns their sum, 135, and main stores that return value.">
+        <p><strong>Check.</strong> <code>add</code> returns <code>a + b</code>. What is the result of <code>add(80, 55)</code>?</p>
+        <button class="opt" type="button" data-correct="false" data-label="80">80</button>
+        <button class="opt" type="button" data-correct="false" data-label="55">55</button>
+        <button class="opt" type="button" data-correct="true" data-label="135">135</button>
+        <button class="opt" type="button" data-correct="false" data-label="The text a + b">The text a + b</button>
+        <div class="feedback" hidden></div>
+      </div>
+      <div class="mark-done">
+        <input type="checkbox" id="done-methods" class="done-box" data-section="methods">
+        <label for="done-methods">I can write a method that returns a value</label>
+      </div>
+      <div class="panel-nav">
+        <button class="btn secondary" type="button" data-go="loops">Back: Loops</button>
+        <button class="btn" type="button" data-go="arrays">Next: Arrays</button>
+      </div>
+    </section>
+    <section class="panel" id="arrays">
+      <h1>Arrays</h1>
+      <p class="lead">An array is a numbered row of boxes that share one name. The position number is the index, and the first index is 0.</p>
+      <p>One <code>int</code> holds one score. An <code>int[]</code> holds a row of scores. You read a box with <code>scores[0]</code>, <code>scores[1]</code>, and so on. <code>scores.length</code> is how many boxes exist. It has no parentheses. The last valid index is <code>length - 1</code>, not <code>length</code>.</p>
+      <div class="card"><p><strong>Analogy.</strong> A row of mailboxes is numbered starting at 0, not 1. If four mailboxes exist, they are 0, 1, 2, and 3. Asking for mailbox 4 does not wrap around. There is no mailbox 4.</p></div>
+      <h2>Four quiz scores</h2>
+      <p>Java, inside <code>main</code>:</p>
+<pre><span class="kw">int</span>[] scores = {<span class="num">80</span>, <span class="num">55</span>, <span class="num">90</span>, <span class="num">70</span>};
+<span class="fn">System</span>.out.println(scores[<span class="num">0</span>]);
+<span class="fn">System</span>.out.println(scores.length);</pre>
+      <p>Output:</p>
+      <div class="result-box">80
+4</div>
+      <div class="box-row" aria-label="Array boxes for 80, 55, 90, and 70">
+        <div class="var-box"><div class="idx">index 0</div><div class="value">80</div></div>
+        <div class="var-box"><div class="idx">index 1</div><div class="value">55</div></div>
+        <div class="var-box"><div class="idx">index 2</div><div class="value">90</div></div>
+        <div class="var-box"><div class="idx">index 3</div><div class="value">70</div></div>
+      </div>
+      <h2>Line by line</h2>
+      <ol>
+        <li><code>int[]</code> means "a row of ints." The braces list the starting values in order.</li>
+        <li><code>scores[0]</code> reads the first box. The value is 80, not 55.</li>
+        <li><code>scores.length</code> is 4, because four values were listed. The indexes are still 0, 1, 2, and 3.</li>
+        <li>A loop visits every box without writing each index by hand:</li>
+      </ol>
+<pre><span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">0</span>; i &lt; scores.length; i++) {
+    <span class="fn">System</span>.out.println(scores[i]);
+}</pre>
+      <p>The test is <code>i &lt; scores.length</code>, not <code>i &lt;= scores.length</code>. The counter starts at 0 and stops before 4, so it visits 0, 1, 2, and 3.</p>
+      <div class="compare">
+        <div class="card">
+          <h3>Before</h3>
+<pre><span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">0</span>; i &lt;= scores.length; i++) {
+    <span class="fn">System</span>.out.println(scores[i]);
+}</pre>
+          <p>When <code>i</code> is 4, the body asks for a box that is not there. Java stops with an error.</p>
+        </div>
+        <div class="card">
+          <h3>After</h3>
+<pre><span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">0</span>; i &lt; scores.length; i++) {
+    <span class="fn">System</span>.out.println(scores[i]);
+}</pre>
+          <p>The loop stops when <code>i</code> reaches the length. Every real box is printed once.</p>
+        </div>
+      </div>
+      <h2>Try it yourself</h2>
+      <div class="playground">
+        <p>Edit the four scores, then pick an index. Index 4 is included so you can see the out-of-range mistake. Uncheck the safe loop test to see which indexes a bad header would touch.</p>
+        <div class="fields">
+          <div class="field"><label for="arr0">scores[0]</label><input id="arr0" value="80" autocomplete="off"></div>
+          <div class="field"><label for="arr1">scores[1]</label><input id="arr1" value="55" autocomplete="off"></div>
+          <div class="field"><label for="arr2">scores[2]</label><input id="arr2" value="90" autocomplete="off"></div>
+          <div class="field"><label for="arr3">scores[3]</label><input id="arr3" value="70" autocomplete="off"></div>
+        </div>
+        <div class="fields">
+          <div class="field">
+            <label for="arrIndex">Index to read</label>
+            <select id="arrIndex">
+              <option value="0">0</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4 (not a real box)</option>
+            </select>
+          </div>
+        </div>
+        <div class="box-row" id="arrayBoxes"></div>
+        <div class="checkline">
+          <input type="checkbox" id="arrSafe" checked>
+          <label for="arrSafe">Safe test: i &lt; scores.length</label>
+        </div>
+        <p>Simulator result:</p>
+        <div class="result-box" id="arrOut" aria-live="polite"></div>
+      </div>
+      <div class="card"><p><strong>Exam trap.</strong> The first index is 0. For four scores, the last index is 3. <code>length</code> is 4 and is not a valid index. <code>scores.length</code> has no parentheses. A text value uses <code>name.length()</code> with parentheses. Arrays and strings do not share that spelling.</p></div>
+      <div class="card"><p><strong>Key takeaway.</strong> One name, many numbered boxes, counting from 0. Loop while <code>i &lt; scores.length</code>.</p></div>
+      <div class="card quiz-q" data-why="Four values use indexes 0, 1, 2, and 3. length is 4. The last index is length - 1, which is 3. The last value, 70, is what the box holds, not the index.">
+        <p><strong>Check.</strong> <code>int[] scores = {80, 55, 90, 70}</code>. What is the last valid index?</p>
+        <button class="opt" type="button" data-correct="false" data-label="0">0</button>
+        <button class="opt" type="button" data-correct="false" data-label="4">4</button>
+        <button class="opt" type="button" data-correct="false" data-label="70">70</button>
+        <button class="opt" type="button" data-correct="true" data-label="3">3</button>
+        <div class="feedback" hidden></div>
+      </div>
+      <div class="mark-done">
+        <input type="checkbox" id="done-arrays" class="done-box" data-section="arrays">
+        <label for="done-arrays">I can read and loop through an array</label>
+      </div>
+      <div class="panel-nav">
+        <button class="btn secondary" type="button" data-go="methods">Back: Methods</button>
+        <button class="btn" type="button" data-go="solve">Next: Solve a problem</button>
+      </div>
+    </section>
+
+    <section class="panel" id="solve">
+      <h1>Solve a problem</h1>
+      <p class="lead">Write the goal in plain words before you write Java. Code is the last step, not the first.</p>
+      <p>Beginners often stare at a blank file because they are trying to invent syntax and the idea at the same time. Separate them. A short plan tells you which tools you need: a variable, a decision, a loop, a method, or an array.</p>
+      <div class="card"><p><strong>Analogy.</strong> Planning a trip comes before driving. You name the destination, the start, and the stops. Then you drive. Starting the car with no destination feels busy, and you still do not arrive.</p></div>
+      <h2>The six steps</h2>
+      <ol>
+        <li>Say the goal in one sentence.</li>
+        <li>List the input.</li>
+        <li>List the output.</li>
+        <li>Write the steps in plain words.</li>
+        <li>Turn each step into Java.</li>
+        <li>Check the Java with a sample you can do by hand.</li>
+      </ol>
+      <h2>Worked example: even or odd</h2>
+      <p><strong>Goal.</strong> Say whether a whole number is even or odd.</p>
+      <p><strong>Input.</strong> One <code>int</code>, named <code>n</code>.</p>
+      <p><strong>Output.</strong> The word even or the word odd.</p>
+      <p><strong>Plain steps.</strong> Divide by 2 and look at the remainder. If the remainder is 0, the number is even. Otherwise it is odd.</p>
+      <p>Java, inside <code>main</code>:</p>
+<pre><span class="kw">int</span> n = <span class="num">7</span>;
+<span class="kw">if</span> (n % <span class="num">2</span> == <span class="num">0</span>) {
+    <span class="fn">System</span>.out.println(<span class="str">"even"</span>);
+} <span class="kw">else</span> {
+    <span class="fn">System</span>.out.println(<span class="str">"odd"</span>);
+}</pre>
+      <p>Output:</p>
+      <div class="result-box">odd</div>
+      <h2>Line by line</h2>
+      <ol>
+        <li><code>int n = 7;</code> is the sample input.</li>
+        <li><code>n % 2</code> is the remainder. 7 % 2 is 1.</li>
+        <li><code>== 0</code> asks whether that remainder is zero. 1 == 0 is false.</li>
+        <li><code>else</code> prints odd. A hand check with 8 gives remainder 0, so the <code>if</code> path would print even.</li>
+      </ol>
+      <h2>Try it yourself</h2>
+      <div class="playground">
+        <p>Pick a task. The page loads a sample, rebuilds the Java for your numbers, and traces the steps. Do the sample by hand, then change a number.</p>
+        <div class="chips" role="group" aria-label="Practice tasks">
+          <button class="method-chip active" type="button" data-task="even">Even or odd</button>
+          <button class="method-chip" type="button" data-task="largest">Largest of three</button>
+          <button class="method-chip" type="button" data-task="sum">Sum of scores</button>
+          <button class="method-chip" type="button" data-task="count">Count the passes</button>
+        </div>
+        <div data-task-panel="even">
+          <div class="field"><label for="evenN">n</label><input id="evenN" value="7" autocomplete="off"></div>
+        </div>
+        <div data-task-panel="largest" hidden>
+          <div class="fields">
+            <div class="field"><label for="bigA">a</label><input id="bigA" value="80" autocomplete="off"></div>
+            <div class="field"><label for="bigB">b</label><input id="bigB" value="55" autocomplete="off"></div>
+            <div class="field"><label for="bigC">c</label><input id="bigC" value="90" autocomplete="off"></div>
+          </div>
+        </div>
+        <div data-task-panel="sum" hidden>
+          <div class="fields">
+            <div class="field"><label for="sum0">scores[0]</label><input id="sum0" value="80" autocomplete="off"></div>
+            <div class="field"><label for="sum1">scores[1]</label><input id="sum1" value="55" autocomplete="off"></div>
+            <div class="field"><label for="sum2">scores[2]</label><input id="sum2" value="90" autocomplete="off"></div>
+            <div class="field"><label for="sum3">scores[3]</label><input id="sum3" value="70" autocomplete="off"></div>
+          </div>
+        </div>
+        <div data-task-panel="count" hidden>
+          <div class="fields">
+            <div class="field"><label for="pass0">scores[0]</label><input id="pass0" value="80" autocomplete="off"></div>
+            <div class="field"><label for="pass1">scores[1]</label><input id="pass1" value="55" autocomplete="off"></div>
+            <div class="field"><label for="pass2">scores[2]</label><input id="pass2" value="90" autocomplete="off"></div>
+            <div class="field"><label for="pass3">scores[3]</label><input id="pass3" value="70" autocomplete="off"></div>
+            <div class="field"><label for="solvePass">Pass mark</label><input id="solvePass" value="60" autocomplete="off"></div>
+          </div>
+        </div>
+        <p>Java for these numbers:</p>
+        <pre id="solveCode"></pre>
+        <p>Simulator result:</p>
+        <div class="result-box" id="solveOut" aria-live="polite"></div>
+      </div>
+      <div class="card"><p><strong>Mistake.</strong> Typing Java before the goal, the input, and the output are clear. A loop is not a plan. It is a tool you choose after you know you must visit every item.</p></div>
+      <div class="card"><p><strong>Key takeaway.</strong> One sentence for the goal, a sample you can check by hand, then Java. If the sample and the program disagree, trust the hand check and fix the program.</p></div>
+      <div class="card quiz-q" data-why="A one-sentence goal tells you the input, the output, and the steps. The import line and the loops come after that plan.">
+        <p><strong>Check.</strong> What should you write first?</p>
+        <button class="opt" type="button" data-correct="false" data-label="The whole program from memory">The whole program from memory</button>
+        <button class="opt" type="button" data-correct="true" data-label="The goal in one plain sentence">The goal in one plain sentence</button>
+        <button class="opt" type="button" data-correct="false" data-label="A loop, before you know the goal">A loop, before you know the goal</button>
+        <button class="opt" type="button" data-correct="false" data-label="The import line">The import line</button>
+        <div class="feedback" hidden></div>
+      </div>
+      <div class="mark-done">
+        <input type="checkbox" id="done-solve" class="done-box" data-section="solve">
+        <label for="done-solve">I can turn a goal into steps</label>
+      </div>
+      <div class="panel-nav">
+        <button class="btn secondary" type="button" data-go="arrays">Back: Arrays</button>
+        <button class="btn" type="button" data-go="project">Next: Score report</button>
+      </div>
+    </section>
+
+    <section class="panel" id="project">
+      <h1>Project: score report</h1>
+      <p class="lead">Build one program that stores four scores, labels each as Pass or Fail, and prints the average.</p>
+      <p>This uses the whole toolbox. Variables hold the pass mark and the average. An array holds the scores. A loop visits each score. An <code>if</code> chooses Pass or Fail. A method named <code>average</code> returns the decimal average. Scanner reads the four numbers from the keyboard. On this page, the number boxes stand in for that typing.</p>
+      <div class="card"><p><strong>Analogy.</strong> A teacher walks a row of mailboxes. At each box she says the score and whether it passed. After the row, she announces the class average. The loop is the walk. The method is the average calculation she can reuse.</p></div>
+      <h2>The Java program</h2>
+      <p>Java:</p>
+<pre><span class="kw">import</span> java.util.Scanner;
+
+<span class="kw">public class</span> <span class="fn">ScoreReport</span> {
+    <span class="kw">public static double</span> average(<span class="kw">int</span>[] scores) {
+        <span class="kw">int</span> sum = <span class="num">0</span>;
+        <span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">0</span>; i &lt; scores.length; i++) {
+            sum = sum + scores[i];
+        }
+        <span class="kw">return</span> sum / (<span class="kw">double</span>) scores.length;
+    }
+
+    <span class="kw">public static void</span> main(<span class="fn">String</span>[] args) {
+        Scanner input = <span class="kw">new</span> Scanner(<span class="fn">System</span>.in);
+        <span class="kw">int</span>[] scores = <span class="kw">new int</span>[<span class="num">4</span>];
+
+        <span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">0</span>; i &lt; scores.length; i++) {
+            <span class="fn">System</span>.out.print(<span class="str">"Score "</span> + (i + <span class="num">1</span>) + <span class="str">": "</span>);
+            scores[i] = input.nextInt();
+        }
+
+        <span class="kw">int</span> passMark = <span class="num">60</span>;
+
+        <span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">0</span>; i &lt; scores.length; i++) {
+            <span class="kw">if</span> (scores[i] &gt;= passMark) {
+                <span class="fn">System</span>.out.println(<span class="str">"Score "</span> + (i + <span class="num">1</span>) + <span class="str">": "</span> + scores[i] + <span class="str">" Pass"</span>);
+            } <span class="kw">else</span> {
+                <span class="fn">System</span>.out.println(<span class="str">"Score "</span> + (i + <span class="num">1</span>) + <span class="str">": "</span> + scores[i] + <span class="str">" Fail"</span>);
+            }
+        }
+
+        <span class="kw">double</span> avg = average(scores);
+        <span class="fn">System</span>.out.println(<span class="str">"Average: "</span> + avg);
+
+        <span class="kw">if</span> (avg &gt;= passMark) {
+            <span class="fn">System</span>.out.println(<span class="str">"Class result: Pass"</span>);
+        } <span class="kw">else</span> {
+            <span class="fn">System</span>.out.println(<span class="str">"Class result: Fail"</span>);
+        }
+
+        input.close();
+    }
+}</pre>
+      <p>Sample output for 80, 55, 90, and 70, with pass mark 60:</p>
+      <div class="result-box">Score 1: 80 Pass
+Score 2: 55 Fail
+Score 3: 90 Pass
+Score 4: 70 Pass
+Average: 73.75
+Class result: Pass</div>
+      <h2>Line by line</h2>
+      <ol>
+        <li><code>average</code> starts a sum at 0, adds <code>scores[i]</code> for each index, and returns one <code>double</code>.</li>
+        <li><code>(double)</code> converts the count before the division. Without it, <code>295 / 4</code> would be the int 73. With it, the result is 73.75.</li>
+        <li><code>new int[4]</code> builds four boxes, indexes 0 through 3, before any scores are typed.</li>
+        <li>The first loop prints Score 1 through Score 4. It adds 1 to the index so a person does not have to read a report numbered from 0.</li>
+        <li><code>nextInt</code> stores each typed whole number into the current box.</li>
+        <li>The second loop tests <code>scores[i] &gt;= passMark</code> and prints Pass or Fail. One failing score does not stop the loop.</li>
+        <li><code>average(scores)</code> calls the method. The array is the argument. <code>avg</code> stores the return value.</li>
+        <li>The last <code>if</code> compares that average with the same pass mark.</li>
+      </ol>
+      <div class="compare">
+        <div class="card">
+          <h3>Before</h3>
+<pre><span class="kw">return</span> sum / scores.length;</pre>
+          <p>With the sample, sum is 295 and length is 4. Both are ints, so the returned value is 73. The fraction is gone.</p>
+        </div>
+        <div class="card">
+          <h3>After</h3>
+<pre><span class="kw">return</span> sum / (<span class="kw">double</span>) scores.length;</pre>
+          <p>295 / 4.0 is 73.75. The report keeps the fraction.</p>
+        </div>
+      </div>
+      <h2>Try it yourself</h2>
+      <div class="playground">
+        <p>The boxes replace the four <code>nextInt</code> reads. Change the second score to 100 and count the Pass lines. Then set the pass mark to 95 and watch which lines flip. The simulator uses decimal division, matching the <code>(double)</code> return.</p>
+        <div class="fields">
+          <div class="field"><label for="proj0">Score 1</label><input id="proj0" value="80" autocomplete="off"></div>
+          <div class="field"><label for="proj1">Score 2</label><input id="proj1" value="55" autocomplete="off"></div>
+          <div class="field"><label for="proj2">Score 3</label><input id="proj2" value="90" autocomplete="off"></div>
+          <div class="field"><label for="proj3">Score 4</label><input id="proj3" value="70" autocomplete="off"></div>
+          <div class="field"><label for="projPass">Pass mark</label><input id="projPass" value="60" autocomplete="off"></div>
+        </div>
+        <p>Array after those reads:</p>
+        <pre id="projArray"></pre>
+        <p>Simulator result:</p>
+        <div class="result-box" id="projOut" aria-live="polite"></div>
+      </div>
+      <div class="card"><p><strong>Exam trap.</strong> <code>sum / scores.length</code> looks right and quietly drops the fraction. Cast one side to <code>double</code> before you divide. Also print <code>i + 1</code> for humans, while the real index stays at <code>i</code>.</p></div>
+      <div class="card"><p><strong>Key takeaway.</strong> The report is a loop around a decision, plus a method that returns the average. Each tool does one job you already practiced.</p></div>
+      <div class="card quiz-q" data-why="80, 90, and 70 are at least 60. 55 is not. The loop checks each score on its own, so three scores pass.">
+        <p><strong>Check.</strong> The scores are 80, 55, 90, and 70. The pass mark is 60. How many scores pass?</p>
+        <button class="opt" type="button" data-correct="false" data-label="1">1</button>
+        <button class="opt" type="button" data-correct="false" data-label="2">2</button>
+        <button class="opt" type="button" data-correct="true" data-label="3">3</button>
+        <button class="opt" type="button" data-correct="false" data-label="4">4</button>
+        <div class="feedback" hidden></div>
+      </div>
+      <div class="mark-done">
+        <input type="checkbox" id="done-project" class="done-box" data-section="project">
+        <label for="done-project">I can read the score report program</label>
+      </div>
+      <div class="panel-nav">
+        <button class="btn secondary" type="button" data-go="solve">Back: Solve a problem</button>
+        <button class="btn" type="button" data-go="quiz">Next: Quiz</button>
+      </div>
+    </section>
+
+    <section class="panel" id="quiz">
+      <h1>Quiz</h1>
+      <p class="lead">16 questions. Answer them in order. Each one explains itself after you choose.</p>
+      <p>80% is 13 correct. That score means you can use these basics in a small program. Below that, revisit the lesson named in the explanation and use its practice box again.</p>
+
+      <div class="quiz-q" data-why="The computer follows the steps you wrote, in order. It does not fill in a plan you forgot to type.">
+        <h3>1. What is a program?</h3>
+        <button class="opt" type="button" data-correct="true" data-label="A list of exact steps a computer follows">A list of exact steps a computer follows</button>
+        <button class="opt" type="button" data-correct="false" data-label="A guess the computer improves on its own">A guess the computer improves on its own</button>
+        <button class="opt" type="button" data-correct="false" data-label="Any sentence you would say to a friend">Any sentence you would say to a friend</button>
+        <button class="opt" type="button" data-correct="false" data-label="Only the words that appear on screen">Only the words that appear on screen</button>
+        <div class="feedback" hidden></div>
+      </div>
+
+      <div class="quiz-q" data-why="Input is the money you hand over. The process is the subtraction. Output is the change you receive.">
+        <h3>2. A cashier takes money, calculates change, and hands it back. Which part is the process?</h3>
+        <button class="opt" type="button" data-correct="false" data-label="The money you hand over">The money you hand over</button>
+        <button class="opt" type="button" data-correct="true" data-label="The calculation of the change">The calculation of the change</button>
+        <button class="opt" type="button" data-correct="false" data-label="The coins you receive">The coins you receive</button>
+        <button class="opt" type="button" data-correct="false" data-label="The cash register itself">The cash register itself</button>
+        <div class="feedback" hidden></div>
+      </div>
+
+      <div class="quiz-q" data-why="Java looks for main and starts there. import happens earlier as setup. A comment never runs. The last println is just another step.">
+        <h3>3. Where does Java start running your steps?</h3>
+        <button class="opt" type="button" data-correct="false" data-label="The first comment">The first comment</button>
+        <button class="opt" type="button" data-correct="true" data-label="The main method">The main method</button>
+        <button class="opt" type="button" data-correct="false" data-label="The import line">The import line</button>
+        <button class="opt" type="button" data-correct="false" data-label="The last println">The last println</button>
+        <div class="feedback" hidden></div>
+      </div>
+
+      <div class="quiz-q" data-why="The type String starts with a capital S. Text uses double quotes. A bare Maya would be read as a variable name, not as text.">
+        <h3>4. Which line is valid Java?</h3>
+        <button class="opt" type="button" data-correct="false" data-label="string name = &quot;Maya&quot;;">string name = "Maya";</button>
+        <button class="opt" type="button" data-correct="true" data-label="String name = &quot;Maya&quot;;">String name = "Maya";</button>
+        <button class="opt" type="button" data-correct="false" data-label="String name = 'Maya';">String name = 'Maya';</button>
+        <button class="opt" type="button" data-correct="false" data-label="String name = Maya;">String name = Maya;</button>
+        <div class="feedback" hidden></div>
+      </div>
+
+      <div class="quiz-q" data-why="int is the kind of box, score is the label, and 80 is the value placed inside. The line does not print and it does not compare.">
+        <h3>5. What does <code>int score = 80;</code> do?</h3>
+        <button class="opt" type="button" data-correct="false" data-label="It prints 80">It prints 80</button>
+        <button class="opt" type="button" data-correct="true" data-label="It stores 80 in a whole-number box named score">It stores 80 in a whole-number box named score</button>
+        <button class="opt" type="button" data-correct="false" data-label="It checks whether score equals 80">It checks whether score equals 80</button>
+        <button class="opt" type="button" data-correct="false" data-label="It creates four boxes">It creates four boxes</button>
+        <div class="feedback" hidden></div>
+      </div>
+
+      <div class="quiz-q" data-why="When both numbers are int, division keeps the whole number and cuts off the fraction. 7 divided by 2 is 3, with remainder 1.">
+        <h3>6. Both numbers are <code>int</code>. What is <code>7 / 2</code>?</h3>
+        <button class="opt" type="button" data-correct="false" data-label="3.5">3.5</button>
+        <button class="opt" type="button" data-correct="true" data-label="3">3</button>
+        <button class="opt" type="button" data-correct="false" data-label="4">4</button>
+        <button class="opt" type="button" data-correct="false" data-label="1">1</button>
+        <div class="feedback" hidden></div>
+      </div>
+
+      <div class="quiz-q" data-why="% is the remainder. 3 fits into 8 two times, which uses 6, and 2 is left over.">
+        <h3>7. What is <code>8 % 3</code>?</h3>
+        <button class="opt" type="button" data-correct="false" data-label="3">3</button>
+        <button class="opt" type="button" data-correct="true" data-label="2">2</button>
+        <button class="opt" type="button" data-correct="false" data-label="0">0</button>
+        <button class="opt" type="button" data-correct="false" data-label="24">24</button>
+        <div class="feedback" hidden></div>
+      </div>
+
+      <div class="quiz-q" data-why="A single = stores a value in a variable. == compares two values and produces true or false.">
+        <h3>8. Which operator asks whether two numbers are equal?</h3>
+        <button class="opt" type="button" data-correct="false" data-label="=">=</button>
+        <button class="opt" type="button" data-correct="true" data-label="==">==</button>
+        <button class="opt" type="button" data-correct="false" data-label="!=">!=</button>
+        <button class="opt" type="button" data-correct="false" data-label=">=">&gt;=</button>
+        <div class="feedback" hidden></div>
+      </div>
+
+      <div class="quiz-q" data-why="print stays on the same line. println prints and then moves to the next line. Neither one reads the keyboard.">
+        <h3>9. What does <code>println</code> do that <code>print</code> does not?</h3>
+        <button class="opt" type="button" data-correct="false" data-label="It translates the word into another language">It translates the word into another language</button>
+        <button class="opt" type="button" data-correct="false" data-label="It starts the program">It starts the program</button>
+        <button class="opt" type="button" data-correct="true" data-label="It moves to the next line after printing">It moves to the next line after printing</button>
+        <button class="opt" type="button" data-correct="false" data-label="It reads the keyboard">It reads the keyboard</button>
+        <div class="feedback" hidden></div>
+      </div>
+
+      <div class="quiz-q" data-why="nextInt reads the digits and stops before Enter. A following nextLine can read that leftover empty piece. An extra nextLine clears it.">
+        <h3>10. You call <code>nextInt()</code>, then <code>nextLine()</code>. What can go wrong?</h3>
+        <button class="opt" type="button" data-correct="true" data-label="nextLine reads the leftover Enter and gets an empty line">nextLine reads the leftover Enter and gets an empty line</button>
+        <button class="opt" type="button" data-correct="false" data-label="nextLine is unable to read text">nextLine is unable to read text</button>
+        <button class="opt" type="button" data-correct="false" data-label="The number you just read is erased">The number you just read is erased</button>
+        <button class="opt" type="button" data-correct="false" data-label="Java turns the number into a class name">Java turns the number into a class name</button>
+        <div class="feedback" hidden></div>
+      </div>
+
+      <div class="quiz-q" data-why="&& needs both sides to be true. The score passes, but 4 &lt; 3 is false, so the whole test is false and the if body is skipped.">
+        <h3>11. Score is 80 and absences is 4. The test is <code>score &gt;= 60 &amp;&amp; absences &lt; 3</code>. What happens?</h3>
+        <button class="opt" type="button" data-correct="false" data-label="The if body runs">The if body runs</button>
+        <button class="opt" type="button" data-correct="true" data-label="The if body is skipped">The if body is skipped</button>
+        <button class="opt" type="button" data-correct="false" data-label="Only the absence test is looked at">Only the absence test is looked at</button>
+        <button class="opt" type="button" data-correct="false" data-label="Java ignores both sides">Java ignores both sides</button>
+        <div class="feedback" hidden></div>
+      </div>
+
+      <div class="quiz-q" data-why="i becomes 1, 2, 3, and 4. Each passes the test. When i becomes 5, i &lt;= 4 is false and the loop stops.">
+        <h3>12. How many lines does <code>for (int i = 1; i &lt;= 4; i++)</code> print?</h3>
+        <button class="opt" type="button" data-correct="false" data-label="3">3</button>
+        <button class="opt" type="button" data-correct="true" data-label="4">4</button>
+        <button class="opt" type="button" data-correct="false" data-label="5">5</button>
+        <button class="opt" type="button" data-correct="false" data-label="The loop never stops">The loop never stops</button>
+        <div class="feedback" hidden></div>
+      </div>
+
+      <div class="quiz-q" data-why="i starts at 1 and never changes, so i &lt;= 3 stays true. A loop needs a change that can make the test false.">
+        <h3>13. <code>i</code> starts at 1 and this loop never changes <code>i</code>: <code>while (i &lt;= 3)</code>. What is wrong?</h3>
+        <button class="opt" type="button" data-correct="false" data-label="It prints nothing">It prints nothing</button>
+        <button class="opt" type="button" data-correct="true" data-label="It never stops">It never stops</button>
+        <button class="opt" type="button" data-correct="false" data-label="It prints only the number 3">It prints only the number 3</button>
+        <button class="opt" type="button" data-correct="false" data-label="A variable named i is illegal">A variable named i is illegal</button>
+        <div class="feedback" hidden></div>
+      </div>
+
+      <div class="quiz-q" data-why="return sends a value back to the caller and leaves the method. The caller can store it, as in int total = add(80, 55).">
+        <h3>14. What does <code>return</code> do inside a method?</h3>
+        <button class="opt" type="button" data-correct="false" data-label="It restarts the program at main">It restarts the program at main</button>
+        <button class="opt" type="button" data-correct="true" data-label="It sends a value back to the caller and leaves the method">It sends a value back to the caller and leaves the method</button>
+        <button class="opt" type="button" data-correct="false" data-label="It prints the value on the screen">It prints the value on the screen</button>
+        <button class="opt" type="button" data-correct="false" data-label="It deletes the parameters">It deletes the parameters</button>
+        <div class="feedback" hidden></div>
+      </div>
+
+      <div class="quiz-q" data-why="Indexes start at 0. The first value, 80, sits in box 0. length would be 3, and that is not what scores[0] means.">
+        <h3>15. <code>int[] scores = {80, 55, 90}</code>. What is <code>scores[0]</code>?</h3>
+        <button class="opt" type="button" data-correct="false" data-label="55">55</button>
+        <button class="opt" type="button" data-correct="true" data-label="80">80</button>
+        <button class="opt" type="button" data-correct="false" data-label="90">90</button>
+        <button class="opt" type="button" data-correct="false" data-label="3">3</button>
+        <div class="feedback" hidden></div>
+      </div>
+
+      <div class="quiz-q" data-why="Dividing two ints cuts off the fraction. Casting the length to double keeps it. For 80, 55, 90, and 70, the careful division is 73.75, while int division gives 73.">
+        <h3>16. You want the average of 80, 55, 90, and 70 to keep the fraction. Which return is right?</h3>
+        <button class="opt" type="button" data-correct="false" data-label="return sum / scores.length; with sum as an int">return sum / scores.length; with sum as an int</button>
+        <button class="opt" type="button" data-correct="true" data-label="return sum / (double) scores.length;">return sum / (double) scores.length;</button>
+        <button class="opt" type="button" data-correct="false" data-label="return scores[0] / scores[1];">return scores[0] / scores[1];</button>
+        <button class="opt" type="button" data-correct="false" data-label="return scores.length / sum;">return scores.length / sum;</button>
+        <div class="feedback" hidden></div>
+      </div>
+
+      <button class="btn" type="button" id="scoreBtn">Score the quiz</button>
+      <button class="btn secondary" type="button" id="resetQuiz">Try the quiz again</button>
+      <div class="score-banner" id="scoreBanner" aria-live="polite"></div>
+      <div class="mark-done">
+        <input type="checkbox" id="done-quiz" class="done-box" data-section="quiz">
+        <label for="done-quiz">I have taken the quiz</label>
+      </div>
+      <div class="panel-nav">
+        <button class="btn secondary" type="button" data-go="project">Back: Score report</button>
+        <span></span>
+      </div>
+    </section>
+
+  </main>
+</div>
+<script>
+"use strict";
+const ORDER = ["welcome","what","how","syntax","variables","operators","io","conditions","loops","methods","arrays","solve","project","quiz"];
+const DONE_KEY = "javaBasicsTutorDone";
+const PANEL_KEY = "javaBasicsTutorPanel";
+let done = {};
+try { done = JSON.parse(localStorage.getItem(DONE_KEY)) || {}; } catch (e) { done = {}; }
+
+function showPanel(id) {
+  if (!ORDER.includes(id)) return;
+  document.querySelectorAll(".panel").forEach(p => p.classList.toggle("active", p.id === id));
+  document.querySelectorAll(".nav-btn").forEach(b => {
+    const on = b.dataset.panel === id;
+    b.classList.toggle("active", on);
+    if (on) b.setAttribute("aria-current", "page");
+    else b.removeAttribute("aria-current");
+  });
+  localStorage.setItem(PANEL_KEY, id);
+  document.getElementById("navLinks").classList.remove("open");
+  document.getElementById("menuToggle").setAttribute("aria-expanded", "false");
+  const main = document.getElementById("main");
+  if (main) main.focus();
+  window.scrollTo(0, 0);
+}
+
+function renderProgress() {
+  const count = ORDER.filter(id => done[id]).length;
+  document.getElementById("progressCount").textContent = count + " of " + ORDER.length + " sections";
+  document.getElementById("progressFill").style.width = (count / ORDER.length * 100) + "%";
+  document.querySelectorAll(".nav-btn").forEach(b => {
+    const id = b.dataset.panel;
+    b.classList.toggle("done", !!done[id]);
+    b.textContent = done[id] ? b.dataset.label + " Done" : b.dataset.label;
+  });
+  document.querySelectorAll("[data-road]").forEach(el => {
+    el.textContent = done[el.dataset.road] ? "Done" : "";
+  });
+}
+
+document.getElementById("menuToggle").addEventListener("click", () => {
+  const open = document.getElementById("navLinks").classList.toggle("open");
+  document.getElementById("menuToggle").setAttribute("aria-expanded", open ? "true" : "false");
+});
+
+document.body.addEventListener("click", (e) => {
+  const opt = e.target.closest(".opt");
+  if (opt) {
+    const q = opt.closest(".quiz-q");
+    if (!q || q.dataset.locked === "true") return;
+    q.dataset.locked = "true";
+    const correct = opt.dataset.correct === "true";
+    q.dataset.picked = correct ? "true" : "false";
+    q.querySelectorAll(".opt").forEach(btn => {
+      btn.setAttribute("aria-disabled", "true");
+      if (btn.dataset.correct === "true") {
+        btn.classList.add("correct");
+        btn.textContent = btn.dataset.label + " (Correct)";
+      } else {
+        btn.textContent = btn.dataset.label;
+      }
+    });
+    if (!correct) {
+      opt.classList.add("wrong");
+      opt.textContent = opt.dataset.label + " (Wrong)";
+    }
+    const fb = q.querySelector(".feedback");
+    fb.hidden = false;
+    fb.className = "feedback " + (correct ? "good" : "bad");
+    fb.textContent = (correct ? "Correct. " : "Wrong. ") + q.dataset.why;
+    return;
+  }
+  const nav = e.target.closest(".nav-btn");
+  if (nav && nav.dataset.panel) { showPanel(nav.dataset.panel); return; }
+  const go = e.target.closest("[data-go]");
+  if (go) showPanel(go.dataset.go);
+});
+
+document.body.addEventListener("change", (e) => {
+  const box = e.target.closest(".done-box");
+  if (!box) return;
+  done[box.dataset.section] = box.checked;
+  localStorage.setItem(DONE_KEY, JSON.stringify(done));
+  renderProgress();
+});
+
+// PURE START
+function readInt(raw) {
+  const v = String(raw).trim();
+  if (!/^-?(0|[1-9]\d{0,5})$/.test(v)) return null;
+  return Number(v);
+}
+
+function truncTowardZero(n) {
+  return n < 0 ? Math.ceil(n) : Math.floor(n);
+}
+
+function javaIntMod(a, b) {
+  const q = truncTowardZero(a / b);
+  return a - q * b;
+}
+
+function formatDouble(n) {
+  if (!Number.isFinite(n)) return String(n);
+  const nearest = Math.round(n * 10000) / 10000;
+  if (Math.abs(n - nearest) > 1e-9) {
+    return nearest.toFixed(4) + " (shown to 4 decimal places)";
+  }
+  let s = nearest.toFixed(4).replace(/0+$/, "").replace(/\.$/, "");
+  if (!s.includes(".")) s += ".0";
+  return s;
+}
+
+function teaVerdict(order) {
+  const boil = order.indexOf("Boil the water");
+  const pour = order.indexOf("Pour the water over the tea bag");
+  const wait = order.indexOf("Wait two minutes");
+  if (boil === 0 && pour === 1 && wait === 2) {
+    return "The tea is ready. The steps ran from top to bottom, and the water was boiling before the pour.";
+  }
+  if (pour < boil) {
+    return "The water was poured before it was boiled, so the tea stays weak. A program does not reorder your steps.";
+  }
+  if (wait < pour) {
+    return "The wait happened before the water reached the tea. Order is part of the meaning.";
+  }
+  return "These steps are out of order. Read them from the top, the way Java reads statements.";
+}
+
+function gradeTrace(score) {
+  const checks = [
+    [90, "A", "score >= 90"],
+    [80, "B", "score >= 80"],
+    [70, "C", "score >= 70"],
+    [60, "D", "score >= 60"]
+  ];
+  const lines = [];
+  let grade = "F";
+  let matched = false;
+  for (const [cut, letter, label] of checks) {
+    if (matched) {
+      lines.push(label + " was not checked.");
+      continue;
+    }
+    if (score >= cut) {
+      grade = letter;
+      matched = true;
+      lines.push(label + " is true. Print " + letter + ". Skip the remaining checks.");
+    } else {
+      lines.push(label + " is false. Continue.");
+    }
+  }
+  if (!matched) lines.push("No earlier test passed. The else branch prints F.");
+  return { grade, pass: score >= 60, lines };
+}
+
+function evenTrace(n) {
+  const rem = javaIntMod(n, 2);
+  const even = rem === 0;
+  return {
+    word: even ? "even" : "odd",
+    lines: ["n % 2 is " + rem, rem + " == 0 is " + even, "Output: " + (even ? "even" : "odd")]
+  };
+}
+
+function largestTrace(a, b, c) {
+  let largest = a;
+  const steps = ["Start with largest = " + a + "."];
+  if (b > largest) {
+    largest = b;
+    steps.push(b + " > largest is true, so largest = " + b + ".");
+  } else {
+    steps.push(b + " > largest is false. largest stays " + largest + ".");
+  }
+  if (c > largest) {
+    largest = c;
+    steps.push(c + " > largest is true, so largest = " + c + ".");
+  } else {
+    steps.push(c + " > largest is false. largest stays " + largest + ".");
+  }
+  steps.push("Output: " + largest);
+  return { largest, steps };
+}
+
+function sumTrace(scores) {
+  let sum = 0;
+  const steps = [];
+  scores.forEach((s) => {
+    const next = sum + s;
+    steps.push(sum + " + " + s + " = " + next);
+    sum = next;
+  });
+  steps.push("Output: " + sum);
+  return { sum, steps };
+}
+
+function countTrace(scores, mark) {
+  let count = 0;
+  const steps = [];
+  scores.forEach((s, i) => {
+    if (s >= mark) {
+      count += 1;
+      steps.push("scores[" + i + "] is " + s + ". " + s + " >= " + mark + " is true. Count is " + count + ".");
+    } else {
+      steps.push("scores[" + i + "] is " + s + ". " + s + " >= " + mark + " is false. Count stays " + count + ".");
+    }
+  });
+  steps.push("Output: " + count);
+  return { count, steps };
+}
+
+function scoreReport(scores, mark) {
+  const printed = [];
+  const trace = [];
+  scores.forEach((s, i) => {
+    const pass = s >= mark;
+    trace.push("Index " + i + ": " + s + " >= " + mark + " is " + pass + ".");
+    printed.push("Score " + (i + 1) + ": " + s + " " + (pass ? "Pass" : "Fail"));
+  });
+  const sum = scores.reduce((a, b) => a + b, 0);
+  const avg = sum / scores.length;
+  const avgText = formatDouble(avg);
+  printed.push("Average: " + avgText);
+  printed.push("Class result: " + (avg >= mark ? "Pass" : "Fail"));
+  trace.push("Sum " + sum + " / " + scores.length + ".0 = " + avgText + ".");
+  return { printed, trace, sum, avgText };
+}
+
+function fitsJavaInt(n) {
+  return n <= 2147483647 && n >= -2147483648;
+}
+// PURE END
+
+const KEYWORDS = new Set(["int","double","boolean","char","class","public","static","void","if","else","for","while","return","new","true","false","import","String","main"]);
+let tea = ["Wait two minutes", "Boil the water", "Pour the water over the tea bag"];
+let solveTask = "even";
+
+function bindInput(id, fn) {
+  const el = document.getElementById(id);
+  el.addEventListener("input", fn);
+  el.addEventListener("change", fn);
+}
+
+function readScores(ids) {
+  const values = [];
+  for (const id of ids) {
+    const n = readInt(document.getElementById(id).value);
+    if (n === null) return null;
+    values.push(n);
+  }
+  return values;
+}
+
+function renderTea() {
+  const list = document.getElementById("teaList");
+  list.replaceChildren();
+  tea.forEach((step, i) => {
+    const li = document.createElement("li");
+    const span = document.createElement("span");
+    span.textContent = (i + 1) + ". " + step;
+    const actions = document.createElement("div");
+    actions.className = "tea-actions";
+    if (i > 0) actions.append(moveButton("Move up", i, -1));
+    if (i < tea.length - 1) actions.append(moveButton("Move down", i, 1));
+    li.append(span, actions);
+    list.append(li);
+  });
+  document.getElementById("teaCode").textContent = tea.map((step) => 'System.out.println("' + step + '");').join("\n");
+  document.getElementById("teaResult").textContent = tea.join("\n") + "\n\n" + teaVerdict(tea);
+}
+
+function moveButton(label, index, dir) {
+  const btn = document.createElement("button");
+  btn.type = "button";
+  btn.className = "btn secondary";
+  btn.textContent = label;
+  btn.addEventListener("click", () => {
+    const j = index + dir;
+    const tmp = tea[index];
+    tea[index] = tea[j];
+    tea[j] = tmp;
+    renderTea();
+  });
+  return btn;
+}
+
+function updateChange() {
+  const price = readInt(document.getElementById("priceInput").value);
+  const paid = readInt(document.getElementById("paidInput").value);
+  const code = document.getElementById("changeCode");
+  const out = document.getElementById("changeResult");
+  if (price === null || paid === null) {
+    code.textContent = "";
+    out.textContent = "Type whole numbers, up to 6 digits.";
+    return;
+  }
+  const change = paid - price;
+  document.getElementById("flowPrice").textContent = String(price);
+  document.getElementById("flowPaid").textContent = String(paid);
+  document.getElementById("flowWork").textContent = paid + " - " + price;
+  document.getElementById("flowOut").textContent = String(change);
+  code.textContent = "int price = " + price + ";\nint paid = " + paid + ";\nint change = paid - price;\nSystem.out.println(change);";
+  let note = "Output: " + change;
+  if (change < 0) note += "\nA negative change means the amount paid is smaller than the price.";
+  out.textContent = note;
+}
+
+function updateBug() {
+  const id = document.getElementById("bugPick").value;
+  const tpl = document.querySelector('#bugTemplates [data-bug="' + id + '"]');
+  document.getElementById("bugHost").innerHTML = tpl.innerHTML;
+}
+
+function updateVar() {
+  const name = document.getElementById("varName").value.trim();
+  const type = document.getElementById("varType").value;
+  const raw = document.getElementById("varValue").value;
+  const box = document.getElementById("varBox");
+  const line = document.getElementById("varLine");
+  const msg = document.getElementById("varMsg");
+  box.replaceChildren();
+  const fail = (text) => {
+    line.textContent = "";
+    msg.replaceChildren();
+    const mark = document.createElement("span");
+    mark.className = "err";
+    mark.textContent = "Does not fit. ";
+    msg.append(mark, document.createTextNode(text));
+  };
+  if (!/^[A-Za-z][A-Za-z0-9_]*$/.test(name)) {
+    fail("Start the name with a letter. Then use letters, digits, or _. No spaces.");
+    return;
+  }
+  if (KEYWORDS.has(name)) {
+    fail(name + " is already a Java word. Pick a label such as score or studentName.");
+    return;
+  }
+  const v = raw.trim();
+  let shown = "";
+  let javaValue = "";
+  if (type === "int") {
+    if (readInt(v) === null) { fail("An int box holds a whole number such as 80 or -2. No decimal point and no leading zero."); return; }
+    shown = v; javaValue = v;
+  } else if (type === "double") {
+    if (readDoubleSafe(v) === null) { fail("A double box holds a number such as 73.75."); return; }
+    shown = v; javaValue = v;
+  } else if (type === "boolean") {
+    if (v !== "true" && v !== "false") { fail("A boolean box holds only true or false, in lowercase."); return; }
+    shown = v; javaValue = v;
+  } else if (type === "char") {
+    if ([...v].length !== 1) { fail("A char holds one character, such as A. Use String for a word."); return; }
+    shown = "'" + v + "'"; javaValue = "'" + v + "'";
+  } else {
+    if (v.length === 0) { fail("Type some text. Spaces are allowed inside a String."); return; }
+    if (v.includes('"') || v.includes("\\")) { fail("Skip quote marks and backslashes here. The page adds the Java quotes for you."); return; }
+    shown = '"' + v + '"'; javaValue = '"' + v + '"';
+  }
+  const card = document.createElement("div");
+  card.className = "var-box";
+  const label = document.createElement("div");
+  label.className = "label";
+  label.textContent = name;
+  const kind = document.createElement("div");
+  kind.className = "type";
+  kind.textContent = type;
+  const value = document.createElement("div");
+  value.className = "value";
+  value.textContent = shown;
+  card.append(label, kind, value);
+  box.append(card);
+  line.textContent = type + " " + name + " = " + javaValue + ";";
+  msg.replaceChildren();
+  const mark = document.createElement("span");
+  mark.className = "ok";
+  mark.textContent = "Fits. ";
+  let extra = "This value matches the type.";
+  if (name[0] !== name[0].toLowerCase()) extra += " The name is allowed. Variable names usually start with a lowercase letter.";
+  msg.append(mark, document.createTextNode(extra));
+}
+
+function javaNum(raw, mode) {
+  const t = String(raw).trim();
+  if (mode === "double" && !t.includes(".")) return t + ".0";
+  return t;
+}
+
+function updateOp() {
+  const rawA = document.getElementById("opA").value;
+  const rawB = document.getElementById("opB").value;
+  const op = document.getElementById("opOp").value;
+  const mode = document.getElementById("opMode").value;
+  const out = document.getElementById("opOut");
+  const a = mode === "int" ? readInt(rawA) : readDoubleSafe(rawA);
+  const b = mode === "int" ? readInt(rawB) : readDoubleSafe(rawB);
+  if (a === null || b === null) {
+    out.textContent = mode === "int"
+      ? "Int mode needs whole numbers, up to 6 digits."
+      : "Double mode needs numbers such as 10 or 3.5, with at most 4 decimal places.";
+    return;
+  }
+  const left = javaNum(rawA, mode);
+  const right = javaNum(rawB, mode);
+  const expr = left + " " + op + " " + right;
+  if ((op === "/" || op === "%") && b === 0) {
+    if (mode === "int") {
+      out.textContent = expr + "\nJava stops this program. An int cannot be divided by zero.";
+      return;
+    }
+    out.textContent = op === "/"
+      ? expr + "\nResult: Infinity\nFor a double, dividing by zero produces Infinity."
+      : expr + "\nResult: NaN\nNaN means not a number.";
+    return;
+  }
+  if (op === "==" || op === "!=" || op === ">" || op === "<" || op === ">=" || op === "<=") {
+    let value = false;
+    if (op === "==") value = a === b;
+    else if (op === "!=") value = a !== b;
+    else if (op === ">") value = a > b;
+    else if (op === "<") value = a < b;
+    else if (op === ">=") value = a >= b;
+    else value = a <= b;
+    out.textContent = expr + "\nResult: " + (value ? "true" : "false");
+    return;
+  }
+  if (mode === "int") {
+    let exact;
+    let note = "";
+    if (op === "+") exact = a + b;
+    else if (op === "-") exact = a - b;
+    else if (op === "*") exact = a * b;
+    else if (op === "/") {
+      exact = truncTowardZero(a / b);
+      note = "Both numbers are int, so the fraction is cut off. The remainder is " + javaIntMod(a, b) + ".";
+    } else {
+      exact = javaIntMod(a, b);
+      note = "% is the remainder after dividing.";
+    }
+    if (!fitsJavaInt(exact)) {
+      out.textContent = expr + "\nA Java int cannot hold " + exact + ". Try smaller numbers.";
+      return;
+    }
+    out.textContent = expr + "\nResult: " + exact + (note ? "\n" + note : "");
+    return;
+  }
+  let n;
+  let note = "";
+  if (op === "+") n = a + b;
+  else if (op === "-") n = a - b;
+  else if (op === "*") n = a * b;
+  else if (op === "/") { n = a / b; note = "A double division keeps a decimal result."; }
+  else { n = a % b; note = "% is the remainder after dividing."; }
+  out.textContent = expr + "\nResult: " + formatDouble(n) + (note ? "\n" + note : "");
+}
+
+function readDoubleSafe(raw) {
+  const v = String(raw).trim();
+  if (!/^-?(0|[1-9]\d{0,5})(\.\d{1,4})?$/.test(v)) return null;
+  return Number(v);
+}
+
+function updatePrec() {
+  const x = readInt(document.getElementById("precX").value);
+  const y = readInt(document.getElementById("precY").value);
+  const z = readInt(document.getElementById("precZ").value);
+  const out = document.getElementById("precOut");
+  if (x === null || y === null || z === null) {
+    out.textContent = "Type three whole numbers.";
+    return;
+  }
+  const prod = y * z;
+  const left = x + prod;
+  const sum = x + y;
+  const right = sum * z;
+  if (![prod, left, sum, right].every(fitsJavaInt)) {
+    out.textContent = "One of these results does not fit in a Java int. Try smaller whole numbers.";
+    return;
+  }
+  out.textContent = x + " + " + y + " * " + z + " = " + left + "\n(" + x + " + " + y + ") * " + z + " = " + right + "\n* happens before + unless parentheses say otherwise.";
+}
+
+function updateLogic() {
+  const score = readInt(document.getElementById("logicScore").value);
+  const absences = readInt(document.getElementById("logicMiss").value);
+  const out = document.getElementById("logicOut");
+  if (score === null || absences === null) {
+    out.textContent = "Type whole numbers for the score and the absences.";
+    return;
+  }
+  const scoreOk = score >= 60;
+  const absOk = absences < 3;
+  const both = scoreOk && absOk;
+  out.textContent = "score >= 60 is " + scoreOk + "\nabsences < 3 is " + absOk + "\nscore >= 60 && absences < 3 is " + both + "\nscore >= 60 || absences < 3 is " + (scoreOk || absOk) + "\n" + (both ? "The if body runs and prints Pass." : "The if body is skipped.");
+}
+
+function updateIo() {
+  const name = document.getElementById("ioName").value;
+  const age = readInt(document.getElementById("ioAge").value);
+  const out = document.getElementById("ioOut");
+  if (name.trim() === "") {
+    out.textContent = "Type a name. nextLine can keep more than one word.";
+    return;
+  }
+  if (age === null) {
+    out.textContent = "Age needs a whole number. nextInt cannot read a word or a decimal.";
+    return;
+  }
+  out.textContent = "Your name: " + name + "\nHello, " + name + "\nYou are " + age + " years old.";
+}
+
+function updateGrade() {
+  const score = readInt(document.getElementById("gradeScore").value);
+  const flow = document.getElementById("gradeFlow");
+  const out = document.getElementById("gradeOut");
+  flow.replaceChildren();
+  if (score === null) {
+    out.textContent = "Type a whole-number score.";
+    return;
+  }
+  const pass = score >= 60;
+  const trace = gradeTrace(score);
+  [
+    ["Check", score + " >= 60 is " + pass],
+    ["If branch", pass ? "Runs: print Pass" : "Skipped"],
+    ["Else branch", pass ? "Skipped" : "Runs: print Try again"]
+  ].forEach(([title, body]) => {
+    const step = document.createElement("div");
+    step.className = "flow-step";
+    const h = document.createElement("h3");
+    h.textContent = title;
+    const p = document.createElement("p");
+    p.textContent = body;
+    step.append(h, p);
+    flow.append(step);
+  });
+  out.textContent = "Simple decision output: " + (pass ? "Pass" : "Try again") + "\n\nLetter grade trace:\n" + trace.lines.join("\n") + "\nOutput: " + trace.grade;
+}
+
+function updateLaps() {
+  const n = readInt(document.getElementById("lapCount").value);
+  const body = document.getElementById("lapBody");
+  const out = document.getElementById("lapOut");
+  body.replaceChildren();
+  if (n === null || n < 1 || n > 6) {
+    out.textContent = "Type a whole number from 1 to 6 so the table stays readable.";
+    return;
+  }
+  const printed = [];
+  for (let i = 1; i <= n + 1; i++) {
+    const ok = i <= n;
+    const tr = document.createElement("tr");
+    [String(i), ok ? "yes" : "no", ok ? "Lap " + i : "loop stops", ok ? String(i + 1) : ""].forEach((text) => {
+      const td = document.createElement("td");
+      td.textContent = text;
+      tr.append(td);
+    });
+    body.append(tr);
+    if (ok) printed.push("Lap " + i);
+  }
+  out.textContent = printed.join("\n");
+}
+
+function updateAdd() {
+  const a = readInt(document.getElementById("addA").value);
+  const b = readInt(document.getElementById("addB").value);
+  const code = document.getElementById("addCode");
+  const out = document.getElementById("addOut");
+  if (a === null || b === null) {
+    code.textContent = "";
+    out.textContent = "Type two whole numbers.";
+    return;
+  }
+  const sum = a + b;
+  if (!fitsJavaInt(sum)) {
+    code.textContent = "";
+    out.textContent = "The sum does not fit in a Java int. Try smaller numbers.";
+    return;
+  }
+  code.textContent = "int total = add(" + a + ", " + b + ");\nSystem.out.println(total);";
+  out.textContent = "a is " + a + " and b is " + b + "\nreturn a + b sends back " + sum + "\nOutput: " + sum;
+}
+
+function updateArray() {
+  const scores = readScores(["arr0", "arr1", "arr2", "arr3"]);
+  const boxes = document.getElementById("arrayBoxes");
+  const out = document.getElementById("arrOut");
+  boxes.replaceChildren();
+  if (!scores) {
+    out.textContent = "Each score needs to be a whole number, up to 6 digits.";
+    return;
+  }
+  const index = Number(document.getElementById("arrIndex").value);
+  const safe = document.getElementById("arrSafe").checked;
+  scores.forEach((n, i) => {
+    const card = document.createElement("div");
+    card.className = "var-box" + (i === index ? " selected" : "");
+    const idx = document.createElement("div");
+    idx.className = "idx";
+    idx.textContent = "index " + i;
+    const value = document.createElement("div");
+    value.className = "value";
+    value.textContent = String(n);
+    const state = document.createElement("div");
+    state.textContent = i === index ? "Selected" : "";
+    card.append(idx, value, state);
+    boxes.append(card);
+  });
+  const readLine = index >= scores.length
+    ? "scores[" + index + "] does not exist. Valid indexes are 0 to " + (scores.length - 1) + ". Java would stop with an error."
+    : "scores[" + index + "] is " + scores[index] + ".";
+  const visits = [];
+  const last = safe ? scores.length - 1 : scores.length;
+  for (let i = 0; i <= last; i++) visits.push(i);
+  let loopLine = (safe ? "The safe loop visits " : "The unsafe loop visits ") + visits.join(", ") + ".";
+  if (!safe) loopLine += " Index " + scores.length + " is outside the array, so Java would stop with an error.";
+  const sum = scores.reduce((a, b) => a + b, 0);
+  out.textContent = readLine + "\nlength is " + scores.length + ".\n" + loopLine + "\nSum of the real boxes: " + sum + ".";
+}
+
+function setTask(task) {
+  solveTask = task;
+  document.querySelectorAll(".method-chip").forEach((btn) => {
+    btn.classList.toggle("active", btn.dataset.task === task);
+  });
+  document.querySelectorAll("[data-task-panel]").forEach((panel) => {
+    panel.hidden = panel.dataset.taskPanel !== task;
+  });
+  updateSolve();
+}
+
+function updateSolve() {
+  const code = document.getElementById("solveCode");
+  const out = document.getElementById("solveOut");
+  const bad = () => {
+    code.textContent = "";
+    out.textContent = "Type whole numbers in the boxes for this task.";
+  };
+  if (solveTask === "even") {
+    const n = readInt(document.getElementById("evenN").value);
+    if (n === null) { bad(); return; }
+    const trace = evenTrace(n);
+    code.textContent = "int n = " + n + ";\nif (n % 2 == 0) {\n    System.out.println(\"even\");\n} else {\n    System.out.println(\"odd\");\n}";
+    out.textContent = trace.lines.join("\n");
+    return;
+  }
+  if (solveTask === "largest") {
+    const a = readInt(document.getElementById("bigA").value);
+    const b = readInt(document.getElementById("bigB").value);
+    const c = readInt(document.getElementById("bigC").value);
+    if (a === null || b === null || c === null) { bad(); return; }
+    const trace = largestTrace(a, b, c);
+    code.textContent = "int a = " + a + ";\nint b = " + b + ";\nint c = " + c + ";\nint largest = a;\nif (b > largest) {\n    largest = b;\n}\nif (c > largest) {\n    largest = c;\n}\nSystem.out.println(largest);";
+    out.textContent = trace.steps.join("\n");
+    return;
+  }
+  if (solveTask === "sum") {
+    const scores = readScores(["sum0", "sum1", "sum2", "sum3"]);
+    if (!scores) { bad(); return; }
+    const trace = sumTrace(scores);
+    code.textContent = "int[] scores = {" + scores.join(", ") + "};\nint sum = 0;\nfor (int i = 0; i < scores.length; i++) {\n    sum = sum + scores[i];\n}\nSystem.out.println(sum);";
+    out.textContent = trace.steps.join("\n");
+    return;
+  }
+  const scores = readScores(["pass0", "pass1", "pass2", "pass3"]);
+  const mark = readInt(document.getElementById("solvePass").value);
+  if (!scores || mark === null) { bad(); return; }
+  const trace = countTrace(scores, mark);
+  code.textContent = "int passMark = " + mark + ";\nint[] scores = {" + scores.join(", ") + "};\nint count = 0;\nfor (int i = 0; i < scores.length; i++) {\n    if (scores[i] >= passMark) {\n        count = count + 1;\n    }\n}\nSystem.out.println(count);";
+  out.textContent = trace.steps.join("\n");
+}
+
+function updateProject() {
+  const scores = readScores(["proj0", "proj1", "proj2", "proj3"]);
+  const mark = readInt(document.getElementById("projPass").value);
+  const code = document.getElementById("projArray");
+  const out = document.getElementById("projOut");
+  if (!scores || mark === null) {
+    code.textContent = "";
+    out.textContent = "Each score and the pass mark need to be whole numbers.";
+    return;
+  }
+  const report = scoreReport(scores, mark);
+  code.textContent = "int[] scores = {" + scores.join(", ") + "};\nint passMark = " + mark + ";";
+  out.textContent = report.printed.join("\n") + "\n\nTrace:\n" + report.trace.join("\n");
+}
+
+["priceInput", "paidInput"].forEach((id) => bindInput(id, updateChange));
+bindInput("bugPick", updateBug);
+["varName", "varType", "varValue"].forEach((id) => bindInput(id, updateVar));
+["opA", "opB", "opOp", "opMode"].forEach((id) => bindInput(id, updateOp));
+["precX", "precY", "precZ"].forEach((id) => bindInput(id, updatePrec));
+["logicScore", "logicMiss"].forEach((id) => bindInput(id, updateLogic));
+["ioName", "ioAge"].forEach((id) => bindInput(id, updateIo));
+bindInput("gradeScore", updateGrade);
+bindInput("lapCount", updateLaps);
+["addA", "addB"].forEach((id) => bindInput(id, updateAdd));
+["arr0", "arr1", "arr2", "arr3", "arrIndex", "arrSafe"].forEach((id) => bindInput(id, updateArray));
+["evenN", "bigA", "bigB", "bigC", "sum0", "sum1", "sum2", "sum3", "pass0", "pass1", "pass2", "pass3", "solvePass"].forEach((id) => bindInput(id, updateSolve));
+["proj0", "proj1", "proj2", "proj3", "projPass"].forEach((id) => bindInput(id, updateProject));
+document.querySelectorAll(".method-chip").forEach((btn) => {
+  btn.addEventListener("click", () => setTask(btn.dataset.task));
+});
+document.getElementById("scoreBtn").addEventListener("click", () => {
+  const qs = [...document.querySelectorAll("#quiz .quiz-q")];
+  const total = qs.length;
+  const correct = qs.filter((q) => q.dataset.picked === "true").length;
+  const unanswered = qs.filter((q) => q.dataset.locked !== "true").length;
+  const pct = Math.round((correct / total) * 100);
+  const banner = document.getElementById("scoreBanner");
+  banner.className = "score-banner " + (pct >= 80 ? "good" : pct >= 50 ? "mid" : "bad");
+  let msg = "Re-read the lessons, use the practice boxes, then take the quiz again.";
+  if (pct >= 80) msg = "Exam-ready. You can explain these basics and use them in a small program.";
+  else if (pct >= 50) msg = "Review the sections where a question felt unsure, then try again.";
+  const extra = unanswered ? unanswered + " still unanswered. Unanswered questions count as not correct. " : "";
+  banner.textContent = "Score: " + correct + " / " + total + " (" + pct + "%). " + extra + msg;
+});
+document.getElementById("resetQuiz").addEventListener("click", () => {
+  document.querySelectorAll("#quiz .quiz-q").forEach((q) => {
+    delete q.dataset.locked;
+    delete q.dataset.picked;
+    q.querySelectorAll(".opt").forEach((btn) => {
+      btn.classList.remove("correct", "wrong");
+      btn.removeAttribute("aria-disabled");
+      btn.textContent = btn.dataset.label;
+    });
+    const fb = q.querySelector(".feedback");
+    fb.hidden = true;
+    fb.textContent = "";
+    fb.className = "feedback";
+  });
+  const banner = document.getElementById("scoreBanner");
+  banner.textContent = "";
+  banner.className = "score-banner";
+});
+
+renderTea();
+updateChange();
+updateBug();
+updateVar();
+updateOp();
+updatePrec();
+updateLogic();
+updateIo();
+updateGrade();
+updateLaps();
+updateAdd();
+updateArray();
+setTask("even");
+updateProject();
+
+document.querySelectorAll(".done-box").forEach(box => { box.checked = !!done[box.dataset.section]; });
+renderProgress();
+const saved = localStorage.getItem(PANEL_KEY);
+if (saved && ORDER.includes(saved)) showPanel(saved);
+</script>
+</body>
+</html>
