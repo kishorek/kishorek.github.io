@@ -1,0 +1,14 @@
+java-basics/index.html
+  h_b7e40170a559db 61,75-76,140-141,307,414-419,427-433,467-468,471-495,498-516,518-548,556-561,563,1941-1944,1977,1983-1994,2010-2018,2729
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "e7eeaafc4596d684bbe94d93163262d32468929d",
+  "prompts": {},
+  "humans": {
+    "h_b7e40170a559db": {
+      "author": "Kishore Kumar Uthirapathy <libcomet@gmail.com>"
+    }
+  }
+}
