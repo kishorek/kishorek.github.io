@@ -1,0 +1,14 @@
+index.html
+  h_b7e40170a559db 250
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "55bef1da7b6913d53b4f38d3f03e767fbc3f61f1",
+  "prompts": {},
+  "humans": {
+    "h_b7e40170a559db": {
+      "author": "Kishore Kumar Uthirapathy <libcomet@gmail.com>"
+    }
+  }
+}
