@@ -1,0 +1,22 @@
+index.html
+  h_b7e40170a559db 217,261-265
+prompt-gallery/gallery.css
+  h_b7e40170a559db 1-725
+prompt-gallery/gallery.js
+  h_b7e40170a559db 1-389
+prompt-gallery/index.html
+  h_b7e40170a559db 1-124
+prompt-gallery/readme.md
+  h_b7e40170a559db 1-15
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "a0192ac626bb842c9ad9c64d469ceaaa6648c3cf",
+  "prompts": {},
+  "humans": {
+    "h_b7e40170a559db": {
+      "author": "Kishore Kumar Uthirapathy <libcomet@gmail.com>"
+    }
+  }
+}
