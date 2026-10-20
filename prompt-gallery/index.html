@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Prompt Gallery</title>
+  <meta name="description" content="A static shelf of prompts and the images or text they produced." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Outfit:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="gallery.css" />
+</head>
+<body>
+  <a class="skip" href="#grid">Skip to pieces</a>
+  <svg class="grain" aria-hidden="true">
+    <filter id="grain">
+      <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="4" stitchTiles="stitch" />
+    </filter>
+    <rect width="100%" height="100%" filter="url(#grain)" />
+  </svg>
+
+  <div class="wrap">
+    <header class="top">
+      <div class="brand">
+        <span class="pens" aria-hidden="true"><i></i><i></i><i></i></span>
+        <div>
+          <p class="eyebrow">Static archive</p>
+          <h1>Prompt <em>Gallery</em></h1>
+        </div>
+      </div>
+    </header>
+    <hr class="rule" />
+
+    <div class="toolbar" aria-label="Filter the archive">
+      <label class="search">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M16 16.5 20 20.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+        <input id="q" type="search" placeholder="Search prompts" autocomplete="off" aria-label="Search prompts" />
+        <kbd>/</kbd>
+      </label>
+
+      <div class="seg" role="group" aria-label="Output type">
+        <button type="button" data-media="all" aria-pressed="true">All</button>
+        <button type="button" data-media="image" aria-pressed="false">Image</button>
+        <button type="button" data-media="text" aria-pressed="false">Text</button>
+      </div>
+
+      <label class="sort">
+        <span>Sort</span>
+        <select id="sort" aria-label="Sort">
+          <option value="newest">Newest</option>
+          <option value="az">A–Z</option>
+        </select>
+      </label>
+
+      <div class="view" role="group" aria-label="Layout">
+        <button type="button" data-view="grid" aria-pressed="true" aria-label="Grid layout">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="6.5" height="6.5" rx="1.2" fill="none" stroke="currentColor" stroke-width="1.6"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1.2" fill="none" stroke="currentColor" stroke-width="1.6"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1.2" fill="none" stroke="currentColor" stroke-width="1.6"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.2" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
+        </button>
+        <button type="button" data-view="list" aria-pressed="false" aria-label="List layout">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 7h14M5 12h14M5 17h14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="tagbar" id="tags" aria-label="Tags"></div>
+    <p class="count" id="count" aria-live="polite"></p>
+
+    <main id="grid" class="grid"></main>
+    <div id="empty" class="empty" hidden>
+      <p>Nothing on the shelf matches.</p>
+      <button type="button" class="btn ghost" id="clear">Clear filters</button>
+    </div>
+  </div>
+
+  <dialog id="detail" class="sheet" aria-labelledby="d-title">
+    <div class="sheet-top">
+      <p class="sheet-index" id="d-index"></p>
+      <div class="tabs" role="tablist" aria-label="Prompt or output">
+        <button type="button" class="tab" role="tab" id="tab-prompt" data-tab="prompt" aria-selected="true" aria-controls="prompt-col">Prompt</button>
+        <button type="button" class="tab" role="tab" id="tab-output" data-tab="output" aria-selected="false" aria-controls="out-col">Output</button>
+      </div>
+      <button type="button" class="icon-btn" id="close-detail" aria-label="Close">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+    <div class="sheet-grid">
+      <div class="prompt-col" id="prompt-col" role="tabpanel" aria-labelledby="tab-prompt">
+        <p class="kicker" id="d-kicker"></p>
+        <h2 id="d-title"></h2>
+        <p class="sub" id="d-sub"></p>
+        <p class="meta" id="d-meta"></p>
+        <div class="swatches" id="d-swatches"></div>
+        <div class="prompt-head">
+          <span class="label">Prompt</span>
+          <button type="button" class="btn tiny" id="copy-prompt">Copy prompt</button>
+        </div>
+        <pre class="prompt-block" id="d-prompt"></pre>
+      </div>
+      <div class="out-col" id="out-col" role="tabpanel" aria-labelledby="tab-output">
+        <span class="label">Output</span>
+        <figure class="mount" id="d-figure">
+          <button type="button" class="mount-btn" id="open-light" aria-label="View image larger">
+            <img id="d-img" alt="" />
+          </button>
+          <div class="text-out" id="d-text" hidden></div>
+          <figcaption id="d-cap"></figcaption>
+        </figure>
+      </div>
+    </div>
+  </dialog>
+
+  <dialog id="lightbox" class="light" aria-label="Enlarged output">
+    <button type="button" class="icon-btn light-close" id="close-light" aria-label="Close image">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+    </button>
+    <div class="frame">
+      <img id="light-img" alt="" />
+    </div>
+  </dialog>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="gallery.js"></script>
+</body>
+</html>
